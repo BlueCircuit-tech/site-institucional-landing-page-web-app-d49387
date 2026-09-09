@@ -1025,6 +1025,272 @@
     })();
     </script>
 
+    <section data-tela="agenda-e-audiencias" class="hidden">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h1 class="text-2xl font-display font-bold" style="color: #0A0A0A">Agenda e Audiências</h1>
+          <p class="text-sm mt-1 font-body" style="color: #666">Gerencie compromissos, audiências e mediações</p>
+        </div>
+        <button onclick="mostrarTela('nova-audiencia')" class="btn active:scale-95 transition-transform flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold font-body" style="background: #0A0A0A; color: #D4AF37">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nova Audiência
+        </button>
+      </div>
+
+      <div class="grid grid-cols-3 gap-3 mb-6">
+        <div class="card rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: rgba(212,175,55,0.12)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <span class="text-xs font-body" style="color: #888">Este Mês</span>
+          </div>
+          <span class="text-2xl font-display font-bold" style="color: #0A0A0A">12</span>
+          <span class="text-xs font-body ml-2" style="color: #22c55e">+3</span>
+        </div>
+        <div class="card rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: rgba(212,175,55,0.12)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <span class="text-xs font-body" style="color: #888">Pendentes</span>
+          </div>
+          <span class="text-2xl font-display font-bold" style="color: #0A0A0A">4</span>
+          <span class="text-xs font-body ml-2" style="color: #f59e0b">aguardando</span>
+        </div>
+        <div class="card rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: rgba(212,175,55,0.12)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <span class="text-xs font-body" style="color: #888">Confirmadas</span>
+          </div>
+          <span class="text-2xl font-display font-bold" style="color: #0A0A0A">8</span>
+          <span class="text-xs font-body ml-2" style="color: #22c55e">100%</span>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-4 mb-4">
+        <div class="flex items-center justify-between mb-4">
+          <button onclick="agenda_e_audiencias_mudarMes(-1)" class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-gray-100 active:scale-90 transition-transform">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <h3 class="font-display font-bold text-lg" style="color: #0A0A0A" id="calMesAno"></h3>
+          <button onclick="agenda_e_audiencias_mudarMes(1)" class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-gray-100 active:scale-90 transition-transform">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-7 gap-1 mb-2">
+          <div class="text-center text-xs font-body font-semibold py-2" style="color: #999">DOM</div>
+          <div class="text-center text-xs font-body font-semibold py-2" style="color: #999">SEG</div>
+          <div class="text-center text-xs font-body font-semibold py-2" style="color: #999">TER</div>
+          <div class="text-center text-xs font-body font-semibold py-2" style="color: #999">QUA</div>
+          <div class="text-center text-xs font-body font-semibold py-2" style="color: #999">QUI</div>
+          <div class="text-center text-xs font-body font-semibold py-2" style="color: #999">SEX</div>
+          <div class="text-center text-xs font-body font-semibold py-2" style="color: #999">SÁB</div>
+        </div>
+        <div class="grid grid-cols-7 gap-1" id="calGrid"></div>
+      </div>
+
+      <div id="painelDia" class="hidden mb-4">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-display font-bold text-base" style="color: #0A0A0A" id="painelDiaTitulo"></h3>
+          <button onclick="agenda_e_audiencias_fecharPainel()" class="text-xs font-body px-3 py-1.5 rounded-lg transition-colors hover:bg-gray-100" style="color: #888">Fechar</button>
+        </div>
+        <div id="painelDiaLista"></div>
+      </div>
+
+      <div class="card rounded-xl p-4">
+        <h3 class="font-display font-bold text-base mb-3" style="color: #0A0A0A">Próximos Compromissos</h3>
+        <div id="listaCompromissos"></div>
+      </div>
+    </section>
+
+    <script>
+      const audiencias = [
+        { id: 1, tipo: 'Audiência de Instrução', data: '2026-08-06', hora: '09:00', duracao: '2h', sala: 'Sala Virtual - Teams', link: 'https://teams.microsoft.com/l/meetup-join/abc123', participantes: ['Dr. Ricardo Mendes (Árbitro)', 'Ana Luísa Ferreira (Parte)', 'Carlos Eduardo Pinto (Advogado)'], confirmados: [true, true, false], processo: 'Proc. 0024/2026', observacoes: 'Trazer documentação original para conferência.', lembretes: ['whatsapp', 'push'] },
+        { id: 2, tipo: 'Sessão de Julgamento', data: '2026-08-07', hora: '14:00', duracao: '3h', sala: 'Sala de Plenário - 3º Andar', link: '', participantes: ['Dra. Patricia Almeida (Presidente)', 'Dr. Ricardo Mendes (Árbitro)', 'Fernando Costa (Árbitro)', 'Ana Luísa Ferreira (Parte)', 'Roberto Silva (Advogado da Parte Ré)'], confirmados: [true, true, true, false, true], processo: 'Proc. 0018/2026', observacoes: 'Leitura de relatório e votação.', lembretes: ['whatsapp', 'push'] },
+        { id: 3, tipo: 'Mediação', data: '2026-08-08', hora: '10:30', duracao: '1h30', sala: 'Sala de Conciliação - 2º Andar', link: '', participantes: ['Dr. Gustavo Lima (Mediador)', 'João Pereira (Parte)', 'Maria Oliveira (Parte)'], confirmados: [true, false, true], processo: 'Proc. 0031/2026', observacoes: 'Tentativa de acordo pré-julgamento.', lembretes: ['push'] },
+        { id: 4, tipo: 'Audiência de Instrução', data: '2026-08-10', hora: '09:30', duracao: '2h', sala: 'Sala Virtual - Zoom', link: 'https://zoom.us/j/987654321', participantes: ['Dra. Patricia Almeida (Presidente)', 'Carlos Eduardo Pinto (Advogado)', 'Dr. Gustavo Lima (Perito)'], confirmados: [true, false, true], processo: 'Proc. 0027/2026', observacoes: 'Oitiva do perito contábil.', lembretes: ['whatsapp'] },
+        { id: 5, tipo: 'Sessão de Julgamento', data: '2026-08-12', hora: '15:00', duracao: '3h', sala: 'Sala de Plenário - 3º Andar', link: '', participantes: ['Dra. Patricia Almeida (Presidente)', 'Dr. Ricardo Mendes (Árbitro)', 'Fernando Costa (Árbitro)'], confirmados: [true, true, true], processo: 'Proc. 0022/2026', observacoes: '', lembretes: ['whatsapp', 'push'] },
+        { id: 6, tipo: 'Mediação', data: '2026-08-13', hora: '16:00', duracao: '1h', sala: 'Sala Virtual - Teams', link: 'https://teams.microsoft.com/l/meetup-join/xyz789', participantes: ['Dr. Gustavo Lima (Mediador)', 'João Pereira (Parte)', 'Roberto Silva (Advogado)'], confirmados: [false, false, true], processo: 'Proc. 0035/2026', observacoes: 'Segunda tentativa de mediação.', lembretes: ['whatsapp'] },
+        { id: 7, tipo: 'Audiência de Instrução', data: '2026-08-15', hora: '08:30', duracao: '2h', sala: 'Sala de Audiências - 1º Andar', link: '', participantes: ['Dr. Ricardo Mendes (Árbitro)', 'Ana Luísa Ferreira (Parte)', 'Carlos Eduardo Pinto (Advogado)', 'Dr. Gustavo Lima (Perito)'], confirmados: [true, true, true, false], processo: 'Proc. 0040/2026', observacoes: 'Produção de prova pericial.', lembretes: ['whatsapp', 'push'] },
+        { id: 8, tipo: 'Sessão de Julgamento', data: '2026-08-18', hora: '14:00', duracao: '4h', sala: 'Sala de Plenário - 3º Andar', link: '', participantes: ['Dra. Patricia Almeida (Presidente)', 'Dr. Ricardo Mendes (Árbitro)', 'Fernando Costa (Árbitro)', 'Dr. Humberto Nogueira (Árbitro Suplente)'], confirmados: [true, true, true, false], processo: 'Proc. 0015/2026', observacoes: 'Julgamento do processo 0015 - prazo decisório.', lembretes: ['whatsapp', 'push'] },
+        { id: 9, tipo: 'Mediação', data: '2026-08-20', hora: '09:00', duracao: '1h30', sala: 'Sala de Conciliação - 2º Andar', link: '', participantes: ['Dr. Gustavo Lima (Mediador)', 'Paulo Henrique (Parte)', 'Luciana Souza (Advogado)'], confirmados: [false, false, true], processo: 'Proc. 0043/2026', observacoes: 'Primeira sessão de mediação.', lembretes: ['push'] },
+        { id: 10, tipo: 'Audiência de Instrução', data: '2026-08-22', hora: '10:00', duracao: '2h', sala: 'Sala Virtual - Zoom', link: 'https://zoom.us/j/1122334455', participantes: ['Dr. Ricardo Mendes (Árbitro)', 'Ana Luísa Ferreira (Parte)', 'Carlos Eduardo Pinto (Advogado)'], confirmados: [true, true, false], processo: 'Proc. 0048/2026', observacoes: 'Depoimento das partes.', lembretes: ['whatsapp', 'push'] },
+        { id: 11, tipo: 'Sessão de Julgamento', data: '2026-08-25', hora: '14:30', duracao: '3h', sala: 'Sala de Plenário - 3º Andar', link: '', participantes: ['Dra. Patricia Almeida (Presidente)', 'Dr. Ricardo Mendes (Árbitro)', 'Fernando Costa (Árbitro)'], confirmados: [true, true, true], processo: 'Proc. 0038/2026', observacoes: '', lembretes: ['whatsapp', 'push'] },
+        { id: 12, tipo: 'Mediação', data: '2026-08-28', hora: '11:00', duracao: '1h', sala: 'Sala Virtual - Teams', link: 'https://teams.microsoft.com/l/meetup-join/med456', participantes: ['Dr. Gustavo Lima (Mediador)', 'Maria Oliveira (Parte)', 'João Pereira (Parte)'], confirmados: [false, false, true], processo: 'Proc. 0050/2026', observacoes: 'Follow-up de mediação em andamento.', lembretes: ['whatsapp'] }
+      ];
+
+      const diasComAudiencia = {};
+      audiencias.forEach(a => {
+        if (!diasComAudiencia[a.data]) diasComAudiencia[a.data] = [];
+        diasComAudiencia[a.data].push(a);
+      });
+
+      let calData = new Date(2026, 7, 1);
+
+      function agenda_e_audiencias_mudarMes(delta) {
+        calData.setMonth(calData.getMonth() + delta);
+        agenda_e_audiencias_renderCalendario();
+      }
+
+      function agenda_e_audiencias_renderCalendario() {
+        const mes = calData.getMonth();
+        const ano = calData.getFullYear();
+        const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+        document.getElementById('calMesAno').textContent = meses[mes] + ' ' + ano;
+
+        const primeiroDia = new Date(ano, mes, 1).getDay();
+        const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+        const hoje = new Date();
+        const hojeStr = hoje.getFullYear() + '-' + String(hoje.getMonth()+1).padStart(2,'0') + '-' + String(hoje.getDate()).padStart(2,'0');
+
+        let html = '';
+        for (let i = 0; i < primeiroDia; i++) {
+          html += '<div class="py-2"></div>';
+        }
+        for (let d = 1; d <= diasNoMes; d++) {
+          const dataStr = ano + '-' + String(mes+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+          const temAudiencia = diasComAudiencia[dataStr];
+          const isHoje = dataStr === hojeStr;
+          const isSelected = document.getElementById('diaSelecionado')?.dataset?.data === dataStr;
+          html += `<button onclick="agenda_e_audiencias_selecionarDia('${dataStr}')" class="relative py-2 rounded-lg text-sm font-body font-medium transition-all active:scale-95 ${isSelected ? 'ring-2' : ''}" style="color: ${isHoje ? '#0A0A0A' : (temAudiencia ? '#0A0A0A' : '#999')}; background: ${isSelected ? 'rgba(212,175,55,0.12)' : 'transparent'}; ${isSelected ? 'ring-color: #D4AF37' : ''}">${d}${temAudiencia ? `<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full" style="background: #D4AF37"></span>` : ''}</button>`;
+        }
+        document.getElementById('calGrid').innerHTML = html;
+      }
+
+      function agenda_e_audiencias_selecionarDia(data) {
+        const btn = event.currentTarget;
+        const antigo = document.getElementById('diaSelecionado');
+        if (antigo) antigo.removeAttribute('id');
+        btn.id = 'diaSelecionado';
+
+        const auds = diasComAudiencia[data];
+        const [y, m, d] = data.split('-');
+        const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+        const diaSemana = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'][new Date(data).getDay()];
+        document.getElementById('painelDiaTitulo').textContent = diaSemana + ', ' + parseInt(d) + ' de ' + meses[parseInt(m)-1] + ' de ' + y;
+
+        if (!auds || auds.length === 0) {
+          document.getElementById('painelDiaLista').innerHTML = `<div class="text-center py-8"><p class="text-sm font-body" style="color: #999">Nenhum compromisso neste dia</p><button onclick="mostrarTela('nova-audiencia')" class="btn mt-3 px-4 py-2 rounded-lg text-xs font-semibold font-body inline-flex items-center gap-1.5 active:scale-95 transition-transform" style="background: #0A0A0A; color: #D4AF37">+ Agendar audiência</button></div>`;
+        } else {
+          document.getElementById('painelDiaLista').innerHTML = auds.map(a => {
+            const corBadge = a.tipo.includes('Julgamento') ? '#D4AF37' : (a.tipo.includes('Mediação') ? '#22c55e' : '#0A0A0A');
+            const confPct = Math.round((a.confirmados.filter(Boolean).length / a.confirmados.length) * 100);
+            return `<div onclick="agenda_e_audiencias_abrirDetalhe(${a.id})" class="card rounded-lg p-3 mb-2 cursor-pointer active:scale-[0.98] transition-transform hover:shadow-md">
+              <div class="flex items-start justify-between mb-2">
+                <span class="badge text-xs px-2 py-0.5 rounded-full font-body font-semibold" style="background: ${corBadge}15; color: ${corBadge}">${a.tipo}</span>
+                <span class="text-xs font-body" style="color: #888">${a.hora} · ${a.duracao}</span>
+              </div>
+              <p class="text-xs font-body mb-1" style="color: #555">${a.processo}</p>
+              <div class="flex items-center gap-1 text-xs font-body mb-2" style="color: #888">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                ${a.sala}
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex -space-x-1.5">
+                  ${a.participantes.slice(0,3).map((_, i) => `<div class="w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold text-white" style="background: ${['#D4AF37','#0A0A0A','#666'][i]}; font-family: font-body">${a.participantes[i].charAt(0)}</div>`).join('')}
+                  ${a.participantes.length > 3 ? `<div class="w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold font-body" style="background: #eee; color: #888">+${a.participantes.length-3}</div>` : ''}
+                </div>
+                <div class="flex items-center gap-1">
+                  <div class="w-16 h-1.5 rounded-full overflow-hidden" style="background: #eee"><div class="h-full rounded-full" style="width: ${confPct}%; background: ${confPct === 100 ? '#22c55e' : '#f59e0b'}"></div></div>
+                  <span class="text-[10px] font-body font-semibold" style="color: ${confPct === 100 ? '#22c55e' : '#f59e0b'}">${confPct}%</span>
+                </div>
+              </div>
+            </div>`;
+          }).join('');
+        }
+        document.getElementById('painelDia').classList.remove('hidden');
+      }
+
+      function agenda_e_audiencias_fecharPainel() {
+        document.getElementById('painelDia').classList.add('hidden');
+        const sel = document.getElementById('diaSelecionado');
+        if (sel) sel.removeAttribute('id');
+      }
+
+      function agenda_e_audiencias_abrirDetalhe(id) {
+        const a = audiencias.find(x => x.id === id);
+        if (!a) return;
+        const corBadge = a.tipo.includes('Julgamento') ? '#D4AF37' : (a.tipo.includes('Mediação') ? '#22c55e' : '#0A0A0A');
+        const [y, m, d] = a.data.split('-');
+        const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+        const dataExtenso = parseInt(d) + ' de ' + meses[parseInt(m)-1] + ' de ' + y;
+        let html = `<div class="p-5">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="badge text-sm px-3 py-1 rounded-full font-body font-semibold" style="background: ${corBadge}15; color: ${corBadge}">${a.tipo}</span>
+          </div>
+          <div class="space-y-3 text-sm font-body">
+            <div class="flex items-start gap-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><div><p style="color: #0A0A0A" class="font-semibold">${dataExtenso}</p><p style="color: #888">${a.hora} · Duração: ${a.duracao}</p></div></div>
+            <div class="flex items-start gap-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div><p style="color: #0A0A0A" class="font-semibold">${a.sala}</p>${a.link ? `<a href="${a.link}" target="_blank" class="text-xs font-semibold mt-0.5 inline-block" style="color: #D4AF37">Entrar na reunião →</a>` : ''}</div></div>
+            <div class="flex items-start gap-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div><p style="color: #0A0A0A" class="font-semibold">${a.processo}</p></div></div>
+          </div>
+          <div class="mt-5 pt-4" style="border-top: 1px solid #eee">
+            <p class="text-xs font-body font-semibold mb-3" style="color: #888">PARTICIPANTES</p>
+            ${a.participantes.map((p, i) => {
+              const roles = ['Árbitro','Parte','Advogado','Mediador','Perito'];
+              const role = roles[i] || 'Participante';
+              const confirmed = a.confirmados[i];
+              return `<div class="flex items-center justify-between py-2"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background: ${['#D4AF37','#0A0A0A','#555','#999','#c0c0c0'][i] || '#888'}">${p.charAt(0)}</div><div><p class="text-sm font-body font-medium" style="color: #0A0A0A">${p}</p><p class="text-xs font-body" style="color: #888">${role}</p></div></div><span class="badge text-xs px-2 py-0.5 rounded-full font-body" style="background: ${confirmed ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)'}; color: ${confirmed ? '#22c55e' : '#f59e0b'}">${confirmed ? 'Confirmado' : 'Aguardando'}</span></div>`;
+            }).join('')}
+          </div>
+          ${a.observacoes ? `<div class="mt-4 pt-4" style="border-top: 1px solid #eee"><p class="text-xs font-body font-semibold mb-2" style="color: #888">OBSERVAÇÕES</p><p class="text-sm font-body" style="color: #555">${a.observacoes}</p></div>` : ''}
+          <div class="mt-5 pt-4 flex gap-2" style="border-top: 1px solid #eee">
+            <button onclick="agenda_e_audiencias_enviarLembrete(${a.id})" class="btn flex-1 py-2.5 rounded-lg text-sm font-body font-semibold active:scale-95 transition-transform" style="background: #D4AF37; color: #0A0A0A">Enviar Lembrete</button>
+            <button onclick="agenda_e_audiencias_remarcar(${a.id})" class="btn flex-1 py-2.5 rounded-lg text-sm font-body font-semibold active:scale-95 transition-transform border" style="border-color: #ddd; color: #555; background: #fff">Remarcar</button>
+          </div>
+        </div>`;
+        abrirModal(html, 'Detalhes da Audiência');
+      }
+
+      function agenda_e_audiencias_enviarLembrete(id) {
+        const a = audiencias.find(x => x.id === id);
+        if (!a) return;
+        const canais = a.lembretes.map(l => l === 'whatsapp' ? 'WhatsApp' : 'Push Notification').join(' e ');
+        toast('Lembrete enviado por ' + canais + ' para ' + a.participantes.length + ' participantes', 'ok');
+        fecharModal();
+      }
+
+      function agenda_e_audiencias_remarcar(id) {
+        fecharModal();
+        mostrarTela('nova-audiencia');
+      }
+
+      function agenda_e_audiencias_renderLista() {
+        const ordenados = [...audiencias].sort((a, b) => a.data.localeCompare(b.data) || a.hora.localeCompare(b.hora));
+        const hojeStr = new Date().toISOString().split('T')[0];
+        const proximos = ordenados.filter(a => a.data >= hojeStr).slice(0, 8);
+        document.getElementById('listaCompromissos').innerHTML = proximos.map(a => {
+          const corBadge = a.tipo.includes('Julgamento') ? '#D4AF37' : (a.tipo.includes('Mediação') ? '#22c55e' : '#0A0A0A');
+          const [y, m, d] = a.data.split('-');
+          const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+          const confPct = Math.round((a.confirmados.filter(Boolean).length / a.confirmados.length) * 100);
+          return `<div onclick="agenda_e_audiencias_abrirDetalhe(${a.id})" class="flex items-center gap-3 py-3 cursor-pointer active:scale-[0.98] transition-transform" style="border-bottom: 1px solid #f3f3f3">
+            <div class="flex flex-col items-center justify-center w-12 h-12 rounded-xl" style="background: rgba(212,175,55,0.08)">
+              <span class="text-lg font-display font-bold leading-none" style="color: #0A0A0A">${parseInt(d)}</span>
+              <span class="text-[10px] font-body font-semibold" style="color: #D4AF37">${meses[parseInt(m)-1]}</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-body font-semibold truncate" style="color: #0A0A0A">${a.tipo}</p>
+              <p class="text-xs font-body" style="color: #888">${a.hora} · ${a.processo}</p>
+            </div>
+            <div class="flex flex-col items-end gap-1">
+              <span class="badge text-[10px] px-2 py-0.5 rounded-full font-body" style="background: ${corBadge}15; color: ${corBadge}">${a.tipo.split(' de ').pop()}</span>
+              <div class="flex items-center gap-1">
+                <div class="w-10 h-1 rounded-full overflow-hidden" style="background: #eee"><div class="h-full rounded-full" style="width: ${confPct}%; background: ${confPct === 100 ? '#22c55e' : '#f59e0b'}"></div></div>
+                <span class="text-[9px] font-body font-bold" style="color: ${confPct === 100 ? '#22c55e' : '#f59e0b'}">${confPct}%</span>
+              </div>
+            </div>
+          </div>`;
+        }).join('') || '<p class="text-sm font-body text-center py-8" style="color: #999">Nenhum compromisso encontrado</p>';
+      }
+
+      agenda_e_audiencias_renderCalendario();
+      agenda_e_audiencias_renderLista();
+    </script>
+
     <!-- TELAS -->
     </main>
 
