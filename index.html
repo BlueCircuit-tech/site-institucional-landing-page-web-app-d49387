@@ -676,6 +676,355 @@
 })();
 </script>
 
+    <section data-tela="detalhe-do-processo" class="hidden">
+      <div class="min-h-screen bg-[#F5F5F5]">
+        <div class="sticky top-0 z-30 bg-[#0A0A0A] px-5 pt-5 pb-4">
+          <div class="flex items-center justify-between mb-3">
+            <button onclick="mostrarTela('meus-processos')" class="p-2 -ml-2 rounded-lg hover:bg-white/10 transition active:scale-90" aria-label="Voltar">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FAFAFA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="flex gap-1">
+              <button onclick="detalhe_do_processo_compartilhar()" class="p-2 rounded-lg hover:bg-white/10 transition active:scale-90" aria-label="Compartilhar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              </button>
+              <button onclick="detalhe_do_processo_maisOpcoes()" class="p-2 rounded-lg hover:bg-white/10 transition active:scale-90" aria-label="Mais opções">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FAFAFA" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5" fill="#FAFAFA"/><circle cx="12" cy="12" r="1.5" fill="#FAFAFA"/><circle cx="12" cy="19" r="1.5" fill="#FAFAFA"/></svg>
+              </button>
+            </div>
+          </div>
+          <p class="text-marca-500 text-[11px] font-semibold tracking-[0.15em] uppercase mb-0.5">Processo Arbitral</p>
+          <h1 class="text-white font-display text-[22px] font-bold leading-tight mb-2">ARB-2026-0047/MA</h1>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="inline-flex items-center gap-1.5 bg-amber-500/20 text-marca-400 text-[11px] font-bold px-2.5 py-1 rounded-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-marca-400 animate-pulse"></span>Em Andamento
+            </span>
+            <span class="text-gray-400 text-xs">Protocolado em 15/01/2026</span>
+          </div>
+        </div>
+        <div class="bg-white px-5 pt-4 pb-3 border-b border-gray-100">
+          <div class="grid grid-cols-3 gap-3 mb-4">
+            <div class="text-center">
+              <p class="text-[11px] text-gray-500 uppercase tracking-wide mb-0.5">Prazo Restante</p>
+              <p class="text-lg font-bold text-[#0A0A0A]">87</p>
+              <p class="text-[10px] text-gray-400">dias úteis</p>
+            </div>
+            <div class="text-center border-l border-gray-100">
+              <p class="text-[11px] text-gray-500 uppercase tracking-wide mb-0.5">Documentos</p>
+              <p class="text-lg font-bold text-[#0A0A0A]">8</p>
+              <p class="text-[10px] text-gray-400">protocolados</p>
+            </div>
+            <div class="text-center border-l border-gray-100">
+              <p class="text-[11px] text-gray-500 uppercase tracking-wide mb-0.5">Valor da Causa</p>
+              <p class="text-sm font-bold text-[#0A0A0A] leading-tight">R$ 2,4 mi</p>
+              <p class="text-[10px] text-gray-400">controversos</p>
+            </div>
+          </div>
+          <svg viewBox="0 0 340 70" class="w-full h-[70px] mb-1" aria-label="Atividade mensal">
+            <rect x="20" y="35" width="22" height="30" rx="3" fill="#D4AF37" opacity="0.25"/>
+            <rect x="55" y="20" width="22" height="45" rx="3" fill="#D4AF37" opacity="0.45"/>
+            <rect x="90" y="28" width="22" height="37" rx="3" fill="#D4AF37" opacity="0.35"/>
+            <rect x="125" y="10" width="22" height="55" rx="3" fill="#D4AF37" opacity="0.6"/>
+            <rect x="160" y="22" width="22" height="43" rx="3" fill="#D4AF37" opacity="0.45"/>
+            <rect x="195" y="5" width="22" height="60" rx="3" fill="#D4AF37" opacity="0.8"/>
+            <rect x="230" y="15" width="22" height="50" rx="3" fill="#D4AF37" opacity="0.65"/>
+            <rect x="265" y="30" width="22" height="35" rx="3" fill="#D4AF37" opacity="0.3"/>
+            <rect x="300" y="12" width="22" height="53" rx="3" fill="#D4AF37" opacity="0.7"/>
+            <text x="31" y="64" text-anchor="middle" fill="#9CA3AF" font-size="8" font-family="sans-serif">Jan</text>
+            <text x="66" y="64" text-anchor="middle" fill="#9CA3AF" font-size="8" font-family="sans-serif">Fev</text>
+            <text x="101" y="64" text-anchor="middle" fill="#9CA3AF" font-size="8" font-family="sans-serif">Mar</text>
+            <text x="136" y="64" text-anchor="middle" fill="#9CA3AF" font-size="8" font-family="sans-serif">Abr</text>
+            <text x="171" y="64" text-anchor="middle" fill="#9CA3AF" font-size="8" font-family="sans-serif">Mai</text>
+            <text x="206" y="64" text-anchor="middle" fill="#9CA3AF" font-size="8" font-family="sans-serif">Jun</text>
+            <text x="241" y="64" text-anchor="middle" fill="#9CA3AF" font-size="8" font-family="sans-serif">Jul</text>
+            <text x="276" y="64" text-anchor="middle" fill="#9CA3AF" font-size="8" font-family="sans-serif">Ago</text>
+            <text x="311" y="64" text-anchor="middle" fill="#9CA3AF" font-size="8" font-family="sans-serif">Set</text>
+          </svg>
+        </div>
+        <div class="flex gap-2 px-5 py-3 bg-white border-b border-gray-100">
+          <button onclick="detalhe_do_processo_addDoc()" class="btn flex-1 flex items-center justify-center gap-1.5 bg-[#0A0A0A] text-white text-sm font-semibold py-2.5 rounded-lg active:scale-95 transition">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Documento
+          </button>
+          <button onclick="mostrarTela('nova-audiencia')" class="btn flex items-center justify-center gap-1.5 bg-marca-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg active:scale-95 transition">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Agendar
+          </button>
+          <button onclick="detalhe_do_processo_movimentar()" class="btn flex items-center justify-center gap-1.5 border-2 border-[#0A0A0A] text-[#0A0A0A] text-sm font-semibold px-4 py-2.5 rounded-lg active:scale-95 transition">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Movimentar
+          </button>
+        </div>
+        <div class="px-5 py-4 bg-white mt-2">
+          <h2 class="font-display font-bold text-[#0A0A0A] text-base mb-3">Partes e Profissionais</h2>
+          <div class="flex gap-4 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-hide">
+            <div onclick="abrirModal(detalhe_do_processo_htmlParte('autor'),'Detalhe — Autor')" class="flex-shrink-0 w-[130px] bg-gray-50 rounded-xl p-3 border border-gray-100 cursor-pointer hover:border-marca-400 hover:shadow-md transition active:scale-95">
+              <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-2"><span class="text-blue-700 font-bold text-sm">CH</span></div>
+              <p class="text-xs font-semibold text-[#0A0A0A] leading-tight mb-0.5">Construtora Horizonte</p>
+              <p class="text-[10px] text-gray-500">Autora</p>
+              <span class="inline-block mt-1.5 text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-semibold">Ativo</span>
+            </div>
+            <div onclick="abrirModal(detalhe_do_processo_htmlParte('reu'),'Detalhe — Réu')" class="flex-shrink-0 w-[130px] bg-gray-50 rounded-xl p-3 border border-gray-100 cursor-pointer hover:border-marca-400 hover:shadow-md transition active:scale-95">
+              <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center mb-2"><span class="text-emerald-700 font-bold text-sm">MSL</span></div>
+              <p class="text-xs font-semibold text-[#0A0A0A] leading-tight mb-0.5">Município de São Luís</p>
+              <p class="text-[10px] text-gray-500">Réu</p>
+              <span class="inline-block mt-1.5 text-[10px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded font-semibold">Ativo</span>
+            </div>
+            <div class="flex-shrink-0 w-[130px] bg-gray-50 rounded-xl p-3 border border-gray-100 cursor-pointer hover:border-marca-400 hover:shadow-md transition active:scale-95">
+              <div class="w-10 h-10 rounded-full bg-marca-500/20 flex items-center justify-center mb-2"><span class="text-marca-700 font-bold text-sm">RM</span></div>
+              <p class="text-xs font-semibold text-[#0A0A0A] leading-tight mb-0.5">Dr. Ricardo Mendes</p>
+              <p class="text-[10px] text-gray-500">Árbitro</p>
+              <span class="inline-flex items-center gap-1 mt-1.5 text-[10px] bg-marca-500/10 text-marca-700 px-1.5 py-0.5 rounded font-semibold">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg>Presidente
+              </span>
+            </div>
+            <div class="flex-shrink-0 w-[130px] bg-gray-50 rounded-xl p-3 border border-gray-100 cursor-pointer hover:border-marca-400 hover:shadow-md transition active:scale-95">
+              <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mb-2"><span class="text-purple-700 font-bold text-sm">FA</span></div>
+              <p class="text-xs font-semibold text-[#0A0A0A] leading-tight mb-0.5">Dr. Fernando Almeida</p>
+              <p class="text-[10px] text-gray-500">Advogado — Autora</p>
+              <span class="inline-block mt-1.5 text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded font-semibold">OAB/MA 5432</span>
+            </div>
+            <div class="flex-shrink-0 w-[130px] bg-gray-50 rounded-xl p-3 border border-gray-100 cursor-pointer hover:border-marca-400 hover:shadow-md transition active:scale-95">
+              <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center mb-2"><span class="text-orange-700 font-bold text-sm">MT</span></div>
+              <p class="text-xs font-semibold text-[#0A0A0A] leading-tight mb-0.5">Dr. Marcos Tavares</p>
+              <p class="text-[10px] text-gray-500">Procurador — Réu</p>
+              <span class="inline-block mt-1.5 text-[10px] bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded font-semibold">OAB/MA 8901</span>
+            </div>
+          </div>
+        </div>
+        <div class="px-5 py-4 bg-white mt-2">
+          <h2 class="font-display font-bold text-[#0A0A0A] text-base mb-3">Linha do Tempo</h2>
+          <div id="timeline-container">
+            <div class="detalhe-tl-item relative pl-8 pb-4 border-l-2 border-gray-200 cursor-pointer" onclick="detalhe_do_processo_toggleTL(this)">
+              <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-marca-500 border-2 border-white shadow"></div>
+              <div class="flex items-center gap-2 mb-0.5">
+                <p class="text-sm font-semibold text-[#0A0A0A]">Protocolo Inicial</p>
+                <span class="text-[10px] text-gray-400">15/01/2026</span>
+              </div>
+              <p class="text-xs text-gray-500 tl-resumo">Petição inicial protocolada com documentos de instrução e comprovante de recolhimento de custas arbitrais.</p>
+              <svg class="tl-chevron mt-1 text-gray-400 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="detalhe-tl-item relative pl-8 pb-4 border-l-2 border-gray-200 cursor-pointer" onclick="detalhe_do_processo_toggleTL(this)">
+              <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-blue-400 border-2 border-white shadow"></div>
+              <div class="flex items-center gap-2 mb-0.5">
+                <p class="text-sm font-semibold text-[#0A0A0A]">Citação do Réu</p>
+                <span class="text-[10px] text-gray-400">22/01/2026</span>
+              </div>
+              <p class="text-xs text-gray-500 tl-resumo">Réu citado por via postal com aviso de recebimento. Prazo para contestação: 15 dias úteis.</p>
+              <svg class="tl-chevron mt-1 text-gray-400 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="detalhe-tl-item relative pl-8 pb-4 border-l-2 border-gray-200 cursor-pointer" onclick="detalhe_do_processo_toggleTL(this)">
+              <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-blue-400 border-2 border-white shadow"></div>
+              <div class="flex items-center gap-2 mb-0.5">
+                <p class="text-sm font-semibold text-[#0A0A0A]">Contestação Apresentada</p>
+                <span class="text-[10px] text-gray-400">10/02/2026</span>
+              </div>
+              <p class="text-xs text-gray-500 tl-resumo">Município apresentou contestação tempestiva com documentos anexos. Réplica autorizada.</p>
+              <svg class="tl-chevron mt-1 text-gray-400 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="detalhe-tl-item relative pl-8 pb-4 border-l-2 border-gray-200 cursor-pointer" onclick="detalhe_do_processo_toggleTL(this)">
+              <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-emerald-400 border-2 border-white shadow"></div>
+              <div class="flex items-center gap-2 mb-0.5">
+                <p class="text-sm font-semibold text-[#0A0A0A]">Despacho Saneador</p>
+                <span class="text-[10px] text-gray-400">18/02/2026</span>
+              </div>
+              <p class="text-xs text-gray-500 tl-resumo">Árbitro saneou o processo, fixou pontos controvertidos e determinou produção de prova pericial contábil.</p>
+              <svg class="tl-chevron mt-1 text-gray-400 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="detalhe-tl-item relative pl-8 pb-4 border-l-2 border-gray-200 cursor-pointer" onclick="detalhe_do_processo_toggleTL(this)">
+              <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-emerald-400 border-2 border-white shadow"></div>
+              <div class="flex items-center gap-2 mb-0.5">
+                <p class="text-sm font-semibold text-[#0A0A0A]">Audiência de Conciliação</p>
+                <span class="text-[10px] text-gray-400">05/03/2026</span>
+              </div>
+              <p class="text-xs text-gray-500 tl-resumo">Realizada audiência presencial sem acordo entre as partes. Registrada ata oficial com assinatura digital.</p>
+              <svg class="tl-chevron mt-1 text-gray-400 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="detalhe-tl-item relative pl-8 pb-4 border-l-2 border-gray-200 cursor-pointer" onclick="detalhe_do_processo_toggleTL(this)">
+              <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-amber-400 border-2 border-white shadow"></div>
+              <div class="flex items-center gap-2 mb-0.5">
+                <p class="text-sm font-semibold text-[#0A0A0A]">Perícia Contábil Designada</p>
+                <span class="text-[10px] text-gray-400">20/03/2026</span>
+              </div>
+              <p class="text-xs text-gray-500 tl-resumo">Nomeado perito oficial Dr. Carlos Henrique Souza — CRC/MA 8.432. Prazo para laudo: 30 dias.</p>
+              <svg class="tl-chevron mt-1 text-gray-400 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="detalhe-tl-item relative pl-8 pb-4 border-l-2 border-gray-200 cursor-pointer" onclick="detalhe_do_processo_toggleTL(this)">
+              <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-amber-400 border-2 border-white shadow"></div>
+              <div class="flex items-center gap-2 mb-0.5">
+                <p class="text-sm font-semibold text-[#0A0A0A]">Manifestação das Partes</p>
+                <span class="text-[10px] text-gray-400">10/04/2026</span>
+              </div>
+              <p class="text-xs text-gray-500 tl-resumo">Prazo para manifestação sobre o laudo pericial preliminar encerrado. Autor apresentou impugnação parcial.</p>
+              <svg class="tl-chevron mt-1 text-gray-400 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="detalhe-tl-item relative pl-8 pb-4 border-l-2 border-marca-500 cursor-pointer" onclick="detalhe_do_processo_toggleTL(this)">
+              <div class="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-marca-500 border-2 border-white shadow animate-pulse"></div>
+              <div class="flex items-center gap-2 mb-0.5">
+                <p class="text-sm font-semibold text-[#0A0A0A]">Recurso de Esclarecimento</p>
+                <span class="text-[10px] text-marca-600 font-semibold">25/04/2026 · Atual</span>
+              </div>
+              <p class="text-xs text-gray-500 tl-resumo">Parte autora interpôs recurso de esclarecimento sobre cláusula do laudo pericial. Pendente análise do colegiado.</p>
+              <svg class="tl-chevron mt-1 text-gray-400 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="px-5 py-4 bg-white mt-2">
+          <div class="flex border-b border-gray-200 mb-3">
+            <button onclick="detalhe_do_processo_mudarAba('docs',this)" class="aba-ativa flex-1 pb-2.5 text-sm font-semibold text-[#0A0A0A] border-b-2 border-marca-500 transition">Documentos</button>
+            <button onclick="detalhe_do_processo_mudarAba('mov',this)" class="flex-1 pb-2.5 text-sm font-semibold text-gray-400 transition hover:text-gray-600">Movimentações</button>
+            <button onclick="detalhe_do_processo_mudarAba('partes',this)" class="flex-1 pb-2.5 text-sm font-semibold text-gray-400 transition hover:text-gray-600">Partes</button>
+          </div>
+          <div id="aba-docs" class="aba-conteudo">
+            <div class="flex gap-2 mb-3">
+              <div class="flex-1 relative">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="doc-search" oninput="detalhe_do_processo_filtrarDocs()" placeholder="Buscar documento..." class="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-marca-500 focus:ring-1 focus:ring-marca-500 transition">
+              </div>
+              <button class="px-3 py-2 border border-gray-200 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50 transition active:scale-95">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              </button>
+            </div>
+            <div id="lista-documentos" class="space-y-2"></div>
+            <div id="doc-vazio" class="hidden text-center py-8">
+              <svg class="mx-auto mb-2 text-gray-300" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <p class="text-sm text-gray-400">Nenhum documento encontrado</p>
+            </div>
+          </div>
+          <div id="aba-mov" class="aba-conteudo hidden space-y-0">
+            <div class="relative pl-6 pb-4 border-l-2 border-gray-200">
+              <div class="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-gray-300"></div>
+              <p class="text-xs font-semibold text-[#0A0A0A]">Distribuição do Processo</p>
+              <p class="text-[10px] text-gray-400">15/01/2026 — ARB-2026-0047/MA designada ao Colegiado Arbitral da 2ª Câmara</p>
+            </div>
+            <div class="relative pl-6 pb-4 border-l-2 border-gray-200">
+              <div class="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-gray-300"></div>
+              <p class="text-xs font-semibold text-[#0A0A0A]">Recebimento e Autuação</p>
+              <p class="text-[10px] text-gray-400">15/01/2026 — Processo autuado sob nº ARB-2026-0047/MA. Valor da causa: R$ 2.450.000,00</p>
+            </div>
+            <div class="relative pl-6 pb-4 border-l-2 border-gray-200">
+              <div class="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-gray-300"></div>
+              <p class="text-xs font-semibold text-[#0A0A0A]">Juntada de Procuração</p>
+              <p class="text-[10px] text-gray-400">16/01/2026 — Procuração apresentada pela parte autora com poderes para ação arbitral</p>
+            </div>
+            <div class="relative pl-6 pb-4 border-l-2 border-gray-200">
+              <div class="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-gray-300"></div>
+              <p class="text-xs font-semibold text-[#0A0A0A]">Expedição de Citação</p>
+              <p class="text-[10px] text-gray-400">22/01/2026 — Citação expedida via postal com aviso de recebimento para o réu</p>
+            </div>
+            <div class="relative pl-6 pb-4 border-l-2 border-gray-200">
+              <div class="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-gray-300"></div>
+              <p class="text-xs font-semibold text-[#0A0A0A]">Recebimento de Contestação</p>
+              <p class="text-[10px] text-gray-400">10/02/2026 — Contestação tempestiva recebida e registrada em sistema</p>
+            </div>
+            <div class="relative pl-6 pb-4 border-l-2 border-gray-200">
+              <div class="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-gray-300"></div>
+              <p class="text-xs font-semibold text-[#0A0A0A]">Despacho de Saneamento</p>
+              <p class="text-[10px] text-gray-400">18/02/2026 — Processo saneado. Determinada produção de prova pericial contábil.</p>
+            </div>
+            <div class="relative pl-6 pb-4 border-l-2 border-gray-200">
+              <div class="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-gray-300"></div>
+              <p class="text-xs font-semibold text-[#0A0A0A]">Designação de Perito</p>
+              <p class="text-[10px] text-gray-400">20/03/2026 — Dr. Carlos Henrique Souza nomeado perito oficial. CRC/MA 8.432</p>
+            </div>
+            <div class="relative pl-6 border-l-2 border-marca-500">
+              <div class="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-marca-500 animate-pulse"></div>
+              <p class="text-xs font-semibold text-marca-700">Aguardando Julgamento</p>
+              <p class="text-[10px] text-gray-400">25/04/2026 — Recurso de esclarecimento interposto. Pendente análise do colegiado arbitral.</p>
+            </div>
+          </div>
+          <div id="aba-partes" class="aba-conteudo hidden space-y-3">
+            <div onclick="abrirModal(detalhe_do_processo_htmlParte('autor'),'Detalhe — Autor')" class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition active:scale-[0.98]">
+              <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0"><span class="text-blue-700 font-bold text-xs">CH</span></div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-[#0A0A0A] truncate">Construtora Horizonte Ltda</p><p class="text-[10px] text-gray-500">CNPJ: 12.345.678/0001-90 · Autora</p></div>
+              <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-semibold flex-shrink-0">Ativo</span>
+            </div>
+            <div onclick="abrirModal(detalhe_do_processo_htmlParte('reu'),'Detalhe — Réu')" class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition active:scale-[0.98]">
+              <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0"><span class="text-emerald-700 font-bold text-xs">MSL</span></div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-[#0A0A0A] truncate">Município de São Luís — MA</p><p class="text-[10px] text-gray-500">CNPJ: 06.123.456/0001-78 · Réu</p></div>
+              <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-semibold flex-shrink-0">Ativo</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-marca-500/5 rounded-lg border border-marca-500/20 cursor-pointer hover:bg-marca-500/10 transition active:scale-[0.98]">
+              <div class="w-10 h-10 rounded-full bg-marca-500/20 flex items-center justify-center flex-shrink-0"><span class="text-marca-700 font-bold text-xs">RM</span></div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-[#0A0A0A] truncate">Dr. Ricardo Mendes</p><p class="text-[10px] text-gray-500">Árbitro Presidente · Cadastro: 001/2026</p></div>
+              <span class="text-[10px] bg-marca-500/15 text-marca-700 px-2 py-0.5 rounded-full font-semibold flex-shrink-0">Presidente</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition active:scale-[0.98]">
+              <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0"><span class="text-purple-700 font-bold text-xs">FA</span></div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-[#0A0A0A] truncate">Dr. Fernando Almeida</p><p class="text-[10px] text-gray-500">Advogado da Autora · OAB/MA 5.432</p></div>
+              <span class="text-[10px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-semibold flex-shrink-0">OAB</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition active:scale-[0.98]">
+              <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0"><span class="text-orange-700 font-bold text-xs">MT</span></div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-[#0A0A0A] truncate">Dr. Marcos Tavares</p><p class="text-[10px] text-gray-500">Procurador do Réu · OAB/MA 8.901</p></div>
+              <span class="text-[10px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-semibold flex-shrink-0">OAB</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition active:scale-[0.98]">
+              <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0"><span class="text-gray-600 font-bold text-xs">CS</span></div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-[#0A0A0A] truncate">Dr. Carlos Henrique Souza</p><p class="text-[10px] text-gray-500">Perito Contábil Oficial · CRC/MA 8.432</p></div>
+              <span class="text-[10px] bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full font-semibold flex-shrink-0">Perito</span>
+            </div>
+          </div>
+        </div>
+        <div class="h-6"></div>
+      </div>
+    </section>
+    <script>
+    (function(){
+      const docs = [
+        {nome:'Petição Inicial',arq:'peticao_inicial_arb-2026-0047.pdf',data:'15/01/2026',tamanho:'2.4 MB',tipo:'PDF',imutavel:true,enviado:'Dra. Ana Carolina Vasconcelos'},
+        {nome:'Procuração — Autora',arq:'procuracao_autora.pdf',data:'15/01/2026',tamanho:'1.1 MB',tipo:'PDF',imutavel:true,enviado:'Dr. Fernando Almeida'},
+        {nome:'Contrato 023/2025',arq:'contrato_023_2025_fornecimento.pdf',data:'15/01/2026',tamanho:'5.8 MB',tipo:'PDF',imutavel:true,enviado:'Dra. Ana Carolina Vasconcelos'},
+        {nome:'Contestação',arq:'contestacao_municipio_sl.pdf',data:'10/02/2026',tamanho:'3.2 MB',tipo:'PDF',imutavel:true,enviado:'Dr. Marcos Tavares'},
+        {nome:'Decisão Interlocutória nº 001',arq:'decisao_interlocutoria_001.pdf',data:'18/02/2026',tamanho:'0.8 MB',tipo:'PDF',imutavel:true,enviado:'Dr. Ricardo Mendes'},
+        {nome:'Ata de Audiência 05-03-2026',arq:'ata_audiencia_05_03_2026.pdf',data:'05/03/2026',tamanho:'1.5 MB',tipo:'PDF',imutavel:true,enviado:'Dra. Ana Carolina Vasconcelos'},
+        {nome:'Laudo Pericial Preliminar',arq:'laudo_pericial_preliminar.pdf',data:'20/03/2026',tamanho:'8.7 MB',tipo:'PDF',imutavel:true,enviado:'Dr. Carlos Henrique Souza'},
+        {nome:'Manifestação da Autora',arq:'manifestacao_autora_laudo.pdf',data:'10/04/2026',tamanho:'2.1 MB',tipo:'PDF',imutavel:true,enviado:'Dr. Fernando Almeida'}
+      ];
+      function detalhe_do_processo_renderDocs(filtro){
+        const c=document.getElementById('lista-documentos'),v=document.getElementById('doc-vazio');
+        const q=filtro.toLowerCase().trim();
+        const lista=q?docs.filter(d=>d.nome.toLowerCase().includes(q)||d.arq.toLowerCase().includes(q)||d.tipo.toLowerCase().includes(q)):docs;
+        if(!lista.length){c.innerHTML='';v.classList.remove('hidden');return;}
+        v.classList.add('hidden');c.innerHTML=lista.map((d,i)=>`
+          <div onclick="abrirModal(detalhe_do_processo_htmlDoc(${docs.indexOf(d)}),'Detalhe do Documento')" class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition active:scale-[0.98] group">
+            <div class="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center flex-shrink-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-xs font-semibold text-[#0A0A0A] truncate">${d.nome}</p>
+              <p class="text-[10px] text-gray-400">${d.arq} · ${d.tamanho}</p>
+            </div>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              ${d.imutavel?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>':''}
+              <svg class="text-gray-400 group-hover:text-marca-600 transition" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+          </div>`).join('');
+      }
+      window.detalhe_do_processo_filtrarDocs=function(){detalhe_do_processo_renderDocs(document.getElementById('doc-search').value);};
+      window.detalhe_do_processo_mudarAba=function(aba,btn){
+        document.querySelectorAll('.aba-conteudo').forEach(e=>e.classList.add('hidden'));
+        document.getElementById('aba-'+aba).classList.remove('hidden');
+        document.querySelectorAll('[class*="aba-ativa"]').forEach(b=>{b.classList.remove('aba-ativa','text-[#0A0A0A]','border-b-2','border-marca-500');b.classList.add('text-gray-400');});
+        if(btn){btn.classList.add('aba-ativa','text-[#0A0A0A]','border-b-2','border-marca-500');btn.classList.remove('text-gray-400');}
+      };
+      window.detalhe_do_processo_toggleTL=function(el){
+        const r=el.querySelector('.tl-resumo'),ch=el.querySelector('.tl-chevron');
+        if(r.style.display==='none'){r.style.display='';ch.style.transform='';}
+        else{r.style.display='none';ch.style.transform='rotate(180deg)';}
+      };
+      window.detalhe_do_processo_compartilhar=function(){navigator.share?navigator.share({title:'Processo ARB-2026-0047/MA',text:'Confira o processo arbitral ARB-2026-0047/MA na plataforma BlueCircuit.'}).catch(()=>{}):toast('Link copiado para a área de transferência','ok');};
+      window.detalhe_do_processo_maisOpcoes=function(){abrirModal('<div class=\"space-y-2\"><button onclick=\"fecharModal();toast(\'Processo favoritado\',\'ok\')\" class=\"w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-sm flex items-center gap-3 transition\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"/></svg>Favoritar processo</button><button onclick=\"fecharModal();toast(\'Relatório gerado em PDF\',\'ok\')\" class=\"w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-sm flex items-center gap-3 transition\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"/><polyline points=\"14 2 14 8 20 8\"/><line x1=\"16\" y1=\"13\" x2=\"8\" y2=\"13\"/><line x1=\"16\" y1=\"17\" x2=\"8\" y2=\"17\"/></svg>Gerar relatório PDF</button><button onclick=\"fecharModal();mostrarTela(\'notificacoes\')\" class=\"w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-sm flex items-center gap-3 transition\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9\"/><path d=\"M13.73 21a2 2 0 0 1-3.46 0\"/></svg>Configurar alertas</button></div>','Mais Opções');};
+      window.detalhe_do_processo_addDoc=function(){abrirModal('<div class=\"space-y-4\"><div><label class=\"block text-xs font-semibold text-gray-700 mb-1\">Tipo de Documento</label><select class=\"w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-marca-500\"><option>Petição</option><option>Contestação</option><option>Decisão</option><option>Laudo Pericial</option><option>Procuração</option><option>Ata de Audiência</option><option>Outro</option></select></div><div><label class=\"block text-xs font-semibold text-gray-700 mb-1\">Título do Documento</label><input type=\"text\" placeholder=\"Ex: Recurso de Esclarecimento\" class=\"w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-marca-500\"></div><div><label class=\"block text-xs font-semibold text-gray-700 mb-1\">Arquivo</label><div class=\"border-2 border-dashed border-gray-200 rounded-lg p-6 text-center cursor-pointer hover:border-marca-500 transition\"><svg class=\"mx-auto mb-1 text-gray-400\" width=\"28\" height=\"28\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"17 8 12 3 7 8\"/><line x1=\"12\" y1=\"3\" x2=\"12\" y2=\"15\"/></svg><p class=\"text-xs text-gray-400\">Toque para selecionar arquivo</p></div></div><button onclick=\"fecharModal();toast('Documento enviado para protocolo','ok')\" class=\"w-full btn bg-[#0A0A0A] text-white font-semibold py-3 rounded-lg active:scale-95 transition\">Protocolar Documento</button></div>','Novo Documento');};
+      window.detalhe_do_processo_movimentar=function(){abrirModal('<div class=\"space-y-4\"><div><label class=\"block text-xs font-semibold text-gray-700 mb-1\">Tipo de Movimentação</label><select class=\"w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-marca-500\"><option>Petição</option><option>Despacho</option><option>Decisão</option><option>Certidão</option><option>Intimação</option><option>Juntada</option></select></div><div><label class=\"block text-xs font-semibold text-gray-700 mb-1\">Descrição</label><textarea rows=\"3\" placeholder=\"Descreva a movimentação...\" class=\"w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-marca-500 resize-none\"></textarea></div><div><label class=\"block text-xs font-semibold text-gray-700 mb-1\">Observações (visível para as partes)</label><textarea rows=\"2\" placeholder=\"Opcional\" class=\"w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-marca-500 resize-none\"></textarea></div><button onclick=\"fecharModal();toast('Movimentação registrada com sucesso','ok')\" class=\"w-full btn bg-[#0A0A0A] text-white font-semibold py-3 rounded-lg active:scale-95 transition\">Registrar Movimentação</button></div>','Registrar Movimentação');};
+      window.detalhe_do_processo_htmlDoc=function(i){
+        const d=docs[i];return`<div class=\"space-y-3\"><div class=\"flex items-center gap-3\"><div class=\"w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#DC2626\" stroke-width=\"1.8\" stroke-linecap=\"round\"><path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"/><polyline points=\"14 2 14 8 20 8\"/></svg></div><div><p class=\"font-semibold text-sm text-[#0A0A0A]\">${d.nome}</p><p class=\"text-[10px] text-gray-400\">${d.arq}</p></div></div><div class=\"grid grid-cols-2 gap-2 text-xs\"><div class=\"bg-gray-50 rounded-lg p-2.5\"><p class=\"text-gray-400 text-[10px]\">Tipo</p><p class=\"font-semibold text-[#0A0A0A]\">${d.tipo}</p></div><div class=\"bg-gray-50 rounded-lg p-2.5\"><p class=\"text-gray-400 text-[10px]\">Tamanho</p><p class=\"font-semibold text-[#0A0A0A]\">${d.tamanho}</p></div><div class=\"bg-gray-50 rounded-lg p-2.5\"><p class=\"text-gray-400 text-[10px]\">Protocolado em</p><p class=\"font-semibold text-[#0A0A0A]\">${d.data}</p></div><div class=\"bg-gray-50 rounded-lg p-2.5\"><p class=\"text-gray-400 text-[10px]\">Enviado por</p><p class=\"font-semibold text-[#0A0A0A]\">${d.enviado}</p></div></div><div class=\"flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-lg p-3\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#D4AF37\" stroke-width=\"2\" stroke-linecap=\"round\"><rect x=\"3\" y=\"11\" width=\"18\" height=\"11\" rx=\"2\" ry=\"2\"/><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"/></svg><p class=\"text-xs text-amber-800\">Documento protocolado — imutável conforme regra 6 da Política de Gestão Arbitral</p></div><button onclick=\"fecharModal();toast('Download iniciado: ${d.arq}','ok')\" class=\"w-full btn flex items-center justify-center gap-2 bg-[#0A0A0A] text-white font-semibold py-3 rounded-lg active:scale-95 transition\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"7 10 12 15 17 10\"/><line x1=\"12\" y1=\"15\" x2=\"12\" y2=\"3\"/></svg>Baixar Documento</button></div>`;
+      };
+      window.detalhe_do_processo_htmlParte=function(t){
+        if(t==='autor')return'<div class=\"space-y-3\"><div class=\"flex items-center gap-3\"><div class=\"w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center\"><span class=\"text-blue-700 font-bold text-lg\">CH</span></div><div><p class=\"font-semibold text-[#0A0A0A]\">Construtora Horizonte Ltda</p><p class=\"text-xs text-gray-500\">Parte Autora</p></div></div><div class=\"grid grid-cols-1 gap-2 text-xs\"><div class=\"bg-gray-50 rounded-lg p-3\"><p class=\"text-gray-400 text-[10px] mb-0.5\">CNPJ</p><p class=\"font-semibold\">12.345.678/0001-90</p></div><div class=\"bg-gray-50 rounded-lg p-3\"><p class=\"text-gray-400 text-[10px] mb-0.5\">Endereço</p><p class=\"font-semibold\">Av. Colares Moreira, 450 — Jardim Renascença, São Luís — MA</p></div><div class=\"bg-gray-50 rounded-lg p-3\"><p class=\"text-gray-400 text-[10px] mb-0.5\">Representante Legal</p><p class=\"font-semibold\">Dr. Fernando Almeida — OAB/MA 5.432</p></div></div></div>';
+        if(t==='reu')return'<div class=\"space-y-3\"><div class=\"flex items-center gap-3\"><div class=\"w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center\"><span class=\"text-emerald-700 font-bold text-lg\">MSL</span></div><div><p class=\"font-semibold text-[#0A0A0A]\">Município de São Luís — MA</p><p class=\"text-xs text-gray-500\">Parte Ré</p></div></div><div class=\"grid grid-cols-1 gap-2 text-xs\"><div class=\"bg-gray-50 rounded-lg p-3\"><p class=\"text-gray-400 text-[10px] mb-0.5\">CNPJ</p><p class=\"font-semibold\">06.123.456/0001-78</p></div><div class=\"bg-gray-50 rounded-lg p-3\"><p class=\"text-gray-400 text-[10px] mb-0.5\">Endereço</p><p class=\"font-semibold\">Av. Jerônimo de Albuquerque, 100 — São Francisco, São Luís — MA</p></div><div class=\"bg-gray-50 rounded-lg p-3\"><p class=\"text-gray-400 text-[10px] mb-0.5\">Procurador</p><p class=\"font-semibold\">Dr. Marcos Tavares — OAB/MA 8.901</p></div></div></div>';
+      };
+      detalhe_do_processo_renderDocs('');
+      document.querySelectorAll('.tl-resumo').forEach(r=>r.style.display='none');
+    })();
+    </script>
+
     <!-- TELAS -->
     </main>
 
