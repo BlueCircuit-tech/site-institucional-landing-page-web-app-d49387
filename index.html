@@ -442,6 +442,240 @@
       </script>
     </section>
 
+    <section data-tela="meus-processos" class="hidden">
+  <div class="px-4 pt-2 pb-6 space-y-4">
+    <!-- Cabeçalho da tela -->
+    <div class="flex items-start justify-between">
+      <div>
+        <h1 class="font-display text-2xl font-bold text-marca-900 tracking-tight">Meus Processos</h1>
+        <p class="text-sm text-gray-500 mt-0.5">Arbitral · Trib. de São Paulo</p>
+      </div>
+      <button onclick="mostrarTela('nova-audiencia')" class="bg-marca-500 hover:bg-marca-600 active:scale-95 text-marca-900 rounded-full p-2.5 shadow-md transition-all duration-200" aria-label="Novo processo">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      </button>
+    </div>
+
+    <!-- Indicadores rápidos -->
+    <div class="grid grid-cols-3 gap-2">
+      <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 text-center">
+        <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Em andamento</p>
+        <p class="text-xl font-bold text-marca-900 mt-0.5">7</p>
+      </div>
+      <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 text-center">
+        <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Aguardando</p>
+        <p class="text-xl font-bold text-amber-600 mt-0.5">3</p>
+      </div>
+      <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 text-center">
+        <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Encerrados</p>
+        <p class="text-xl font-bold text-gray-500 mt-0.5">12</p>
+      </div>
+    </div>
+
+    <!-- Busca -->
+    <div class="relative">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
+      <input id="mp-busca" type="text" placeholder="Buscar por número, parte ou CNPJ…" oninput="meus_processos_filtrar()" class="w-full pl-10 pr-4 py-3 bg-white rounded-xl border border-gray-200 text-sm text-marca-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-400 transition-all">
+    </div>
+
+    <!-- Filtros -->
+    <div class="flex gap-2">
+      <div class="relative flex-1">
+        <select id="mp-filtro-status" onchange="meus_processos_filtrar()" class="w-full appearance-none bg-white border border-gray-200 rounded-xl px-3 py-2.5 pr-8 text-sm text-marca-900 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-400 transition-all">
+          <option value="">Todos os status</option>
+          <option value="andamento">Em andamento</option>
+          <option value="aguardando">Aguardando audiência</option>
+          <option value="deliberacao">Em deliberação</option>
+          <option value="encerrado">Encerrado</option>
+        </select>
+        <svg class="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/></svg>
+      </div>
+      <div class="relative flex-1">
+        <select id="mp-filtro-profissional" onchange="meus_processos_filtrar()" class="w-full appearance-none bg-white border border-gray-200 rounded-xl px-3 py-2.5 pr-8 text-sm text-marca-900 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-400 transition-all">
+          <option value="">Todos profissionais</option>
+          <option value="Dr. Ricardo Mendes">Dr. Ricardo Mendes</option>
+          <option value="Dra. Ana Beatriz">Dra. Ana Beatriz</option>
+          <option value="Dr. Carlos Oliveira">Dr. Carlos Oliveira</option>
+          <option value="Dra. Patrícia Lima">Dra. Patrícia Lima</option>
+        </select>
+        <svg class="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/></svg>
+      </div>
+    </div>
+
+    <!-- Ordenação -->
+    <div class="flex items-center gap-2">
+      <span class="text-xs text-gray-400">Ordenar:</span>
+      <div class="flex bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <button onclick="meus_processos_ordenar('data')" id="mp-ord-data" class="px-3 py-1.5 text-xs font-medium bg-marca-500 text-marca-900 transition-all">Data</button>
+        <button onclick="meus_processos_ordenar('numero')" id="mp-ord-numero" class="px-3 py-1.5 text-xs font-medium text-gray-500 hover:bg-gray-50 transition-all">Número</button>
+        <button onclick="meus_processos_ordenar('status')" id="mp-ord-status" class="px-3 py-1.5 text-xs font-medium text-gray-500 hover:bg-gray-50 transition-all">Status</button>
+      </div>
+    </div>
+
+    <!-- Grid de cards -->
+    <div id="mp-lista" class="grid grid-cols-1 gap-3">
+    </div>
+
+    <!-- Estado vazio -->
+    <div id="mp-vazio" class="hidden text-center py-12">
+      <svg class="w-16 h-16 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      <p class="text-gray-500 font-medium">Nenhum processo encontrado</p>
+      <p class="text-sm text-gray-400 mt-1">Tente ajustar os filtros de busca</p>
+    </div>
+
+    <!-- Contador de resultados -->
+    <p id="mp-contador" class="text-xs text-gray-400 text-center pb-2"></p>
+  </div>
+</section>
+
+<script>
+(function(){
+  const dados = [
+    { id: 'ARB-2026-0142', partes: 'Construtora ABC Ltda × Condomínio Residencial Park', status: 'andamento', dataAbertura: '2026-01-15', profissional: 'Dr. Ricardo Mendes', corAvatar: '#0A0A0A', novasMov: true },
+    { id: 'ARB-2026-0138', partes: 'TechSolutions S.A. × NovaLog Transportes', status: 'aguardando', dataAbertura: '2025-12-08', profissional: 'Dra. Ana Beatriz', corAvatar: '#D4AF37', novasMov: true },
+    { id: 'ARB-2026-0129', partes: 'Hospital São Lucas × Dr. Fernando Neves', status: 'deliberacao', dataAbertura: '2025-11-22', profissional: 'Dr. Carlos Oliveira', corAvatar: '#6B7280', novasMov: false },
+    { id: 'ARB-2025-0098', partes: 'Silva & Associados Advogados × Banco do Brasil S.A.', status: 'encerrado', dataAbertura: '2025-09-14', profissional: 'Dra. Patrícia Lima', corAvatar: '#374151', novasMov: false },
+    { id: 'ARB-2026-0151', partes: 'Supermercado Bom Preço × Fornecedora Distribuidora Sul', status: 'andamento', dataAbertura: '2026-03-01', profissional: 'Dr. Ricardo Mendes', corAvatar: '#0A0A0A', novasMov: true },
+    { id: 'ARB-2026-0147', partes: 'Imobiliária Horizonte × Construtora Horizonte', status: 'andamento', dataAbertura: '2026-02-10', profissional: 'Dra. Ana Beatriz', corAvatar: '#D4AF37', novasMov: false },
+    { id: 'ARB-2025-0105', partes: 'Cooperativa Agrícola Central × Fazenda Santa Clara', status: 'encerrado', dataAbertura: '2025-08-30', profissional: 'Dr. Carlos Oliveira', corAvatar: '#6B7280', novasMov: false },
+    { id: 'ARB-2026-0155', partes: 'Grupo Educacional Futuro × Plataforma EdTech Start', status: 'aguardando', dataAbertura: '2026-03-18', profissional: 'Dra. Patrícia Lima', corAvatar: '#374151', novasMov: false },
+  ];
+
+  const statusMap = {
+    andamento: { label: 'Em andamento', bg: 'bg-emerald-100', text: 'text-emerald-700', dot: 'bg-emerald-500' },
+    aguardando: { label: 'Aguardando audiência', bg: 'bg-amber-100', text: 'text-amber-700', dot: 'bg-amber-500' },
+    deliberacao: { label: 'Em deliberação', bg: 'bg-blue-100', text: 'text-blue-700', dot: 'bg-blue-500' },
+    encerrado: { label: 'Encerrado', bg: 'bg-gray-200', text: 'text-gray-600', dot: 'bg-gray-400' }
+  };
+
+  const ordemAtual = { campo: 'data', dir: 'desc' };
+
+  function iniciais(nome) {
+    return nome.split(' ').map(p => p[0]).slice(0, 2).join('').toUpperCase();
+  }
+
+  function renderCard(proc) {
+    const st = statusMap[proc.status];
+    const badgeMov = proc.novasMov
+      ? '<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-marca-500 text-marca-900 text-[10px] font-bold leading-none ml-1.5">N</span>'
+      : '';
+    const avatar = '<span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-xs font-semibold flex-shrink-0" style="background:' + proc.corAvatar + '">' + iniciais(proc.profissional) + '</span>';
+
+    return '<div class="card bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-marca-200 cursor-pointer transition-all duration-200 active:scale-[0.98]" onclick="meus_processos_abrir(\'' + proc.id + '\')">' +
+      '<div class="flex items-start justify-between mb-2">' +
+        '<span class="text-sm font-bold text-marca-500 tracking-wide font-display">' + proc.id + '</span>' +
+        '<div class="flex items-center">' + badgeMov +
+          '<span class="inline-flex items-center gap-1 ' + st.bg + ' ' + st.text + ' text-xs font-medium px-2 py-0.5 rounded-full">' +
+            '<span class="w-1.5 h-1.5 rounded-full ' + st.dot + '"></span>' + st.label +
+          '</span>' +
+        '</div>' +
+      '</div>' +
+      '<p class="text-sm text-gray-800 font-medium leading-snug mb-3 line-clamp-2">' + proc.partes + '</p>' +
+      '<div class="flex items-center justify-between pt-2 border-t border-gray-100">' +
+        '<div class="flex items-center gap-2">' + avatar +
+          '<div><p class="text-xs text-gray-700 font-medium leading-tight">' + proc.profissional + '</p>' +
+          '<p class="text-[11px] text-gray-400">Aberto em ' + dataBR(proc.dataAbertura) + '</p></div>' +
+        '</div>' +
+        '<svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></svg>' +
+      '</div>' +
+    '</div>';
+  }
+
+  window.meus_processos_filtrar = function() {
+    const busca = document.getElementById('mp-busca').value.toLowerCase().trim();
+    const fStatus = document.getElementById('mp-filtro-status').value;
+    const fProf = document.getElementById('mp-filtro-profissional').value;
+
+    let filtrados = dados.filter(p => {
+      const matchBusca = !busca || p.id.toLowerCase().includes(busca) || p.partes.toLowerCase().includes(busca) || p.profissional.toLowerCase().includes(busca);
+      const matchStatus = !fStatus || p.status === fStatus;
+      const matchProf = !fProf || p.profissional === fProf;
+      return matchBusca && matchStatus && matchProf;
+    });
+
+    filtrados.sort((a, b) => {
+      let va, vb;
+      if (ordemAtual.campo === 'data') { va = a.dataAbertura; vb = b.dataAbertura; }
+      else if (ordemAtual.campo === 'numero') { va = a.id; vb = b.id; }
+      else { va = a.status; vb = b.status; }
+      if (va < vb) return ordemAtual.dir === 'asc' ? -1 : 1;
+      if (va > vb) return ordemAtual.dir === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    const lista = document.getElementById('mp-lista');
+    const vazio = document.getElementById('mp-vazio');
+    const contador = document.getElementById('mp-contador');
+
+    if (filtrados.length === 0) {
+      lista.innerHTML = '';
+      vazio.classList.remove('hidden');
+      contador.textContent = '0 processos';
+    } else {
+      vazio.classList.add('hidden');
+      lista.innerHTML = filtrados.map(renderCard).join('');
+      contador.textContent = filtrados.length + ' processo' + (filtrados.length > 1 ? 's' : '') + ' encontrado' + (filtrados.length > 1 ? 's' : '');
+    }
+  };
+
+  window.meus_processos_ordenar = function(campo) {
+    if (ordemAtual.campo === campo) {
+      ordemAtual.dir = ordemAtual.dir === 'asc' ? 'desc' : 'asc';
+    } else {
+      ordemAtual.campo = campo;
+      ordemAtual.dir = 'asc';
+    }
+    ['data', 'numero', 'status'].forEach(c => {
+      const el = document.getElementById('mp-ord-' + c);
+      if (c === campo) {
+        el.className = 'px-3 py-1.5 text-xs font-medium bg-marca-500 text-marca-900 transition-all';
+      } else {
+        el.className = 'px-3 py-1.5 text-xs font-medium text-gray-500 hover:bg-gray-50 transition-all';
+      }
+    });
+    meus_processos_filtrar();
+  };
+
+  window.meus_processos_abrir = function(id) {
+    const proc = dados.find(p => p.id === id);
+    if (!proc) return;
+    const st = statusMap[proc.status];
+    const html = '<div class="space-y-4">' +
+      '<div class="flex items-center justify-between">' +
+        '<span class="text-lg font-bold text-marca-500 font-display">' + proc.id + '</span>' +
+        '<span class="inline-flex items-center gap-1.5 ' + st.bg + ' ' + st.text + ' text-sm font-medium px-3 py-1 rounded-full">' +
+          '<span class="w-2 h-2 rounded-full ' + st.dot + '"></span>' + st.label +
+        '</span>' +
+      '</div>' +
+      '<div class="bg-gray-50 rounded-xl p-4 space-y-3">' +
+        '<div><p class="text-xs text-gray-400 uppercase tracking-wide font-medium">Partes</p><p class="text-sm text-marca-900 font-medium mt-0.5">' + proc.partes + '</p></div>' +
+        '<div class="grid grid-cols-2 gap-3">' +
+          '<div><p class="text-xs text-gray-400 uppercase tracking-wide font-medium">Data de abertura</p><p class="text-sm text-gray-700 mt-0.5">' + dataBR(proc.dataAbertura) + '</p></div>' +
+          '<div><p class="text-xs text-gray-400 uppercase tracking-wide font-medium">Profissional</p><p class="text-sm text-gray-700 mt-0.5">' + proc.profissional + '</p></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="bg-gray-50 rounded-xl p-4">' +
+        '<p class="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Histórico de movimentações</p>' +
+        '<div class="space-y-3">' +
+          '<div class="flex gap-3"><span class="w-2 h-2 rounded-full bg-marca-500 mt-1.5 flex-shrink-0"></span><div><p class="text-sm text-gray-800 font-medium'>Petição inicial protocolada</p><p class="text-xs text-gray-400 mt-0.5">15/01/2026 às 09:30</p></div></div>' +
+          '<div class="flex gap-3"><span class="w-2 h-2 rounded-full bg-marca-300 mt-1.5 flex-shrink-0"></span><div><p class="text-sm text-gray-800 font-medium'>Contestação apresentada pela ré</p><p class="text-xs text-gray-400 mt-0.5">02/02/2026 às 14:15</p></div></div>' +
+          '<div class="flex gap-3"><span class="w-2 h-2 rounded-full bg-marca-300 mt-1.5 flex-shrink-0"></span><div><p class="text-sm text-gray-800 font-medium'>Designado árbitro: Dr. Ricardo Mendes</p><p class="text-xs text-gray-400 mt-0.5">10/02/2026 às 11:00</p></div></div>' +
+          '<div class="flex gap-3"><span class="w-2 h-2 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0"></span><div><p class="text-sm text-gray-800 font-medium'>Sessão de conciliação agendada</p><p class="text-xs text-gray-400 mt-0.5">18/03/2026 às 10:00</p></div></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="flex gap-2 pt-1">' +
+        '<button onclick="mostrarTela(\'detalhe-do-processo\');fecharModal();" class="btn flex-1 bg-marca-500 text-marca-900 font-semibold py-3 rounded-xl active:scale-95 transition-all text-sm">Ver detalhe completo</button>' +
+        '<button onclick="mostrarTela(\'agenda-e-audiencias\');fecharModal();" class="btn flex-1 bg-marca-900 text-white font-semibold py-3 rounded-xl active:scale-95 transition-all text-sm">Agenda</button>' +
+      '</div>' +
+    '</div>';
+    abrirModal(html, 'Detalhe do Processo');
+  };
+
+  window.meus_processos_init = function() {
+    meus_processos_filtrar();
+  };
+})();
+</script>
+
     <!-- TELAS -->
     </main>
 
