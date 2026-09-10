@@ -1829,6 +1829,732 @@
 select.input-cad { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1.2em; padding-right: 2rem; }
 </style>
 
+    <section data-tela="gestao-de-usuarios" class="hidden">
+      <script>
+        const gestao_de_usuarios_dados = [
+          { id: 1, nome: "Dr. Roberto Almeida Campos", email: "roberto.campos@tjrj.gov.br", oab: "OAB/RJ 45.231", perfil: "Presidente", status: "ativo", dataCadastro: "2024-01-15", ultimoAcesso: "2026-08-04T09:32:00", telefone: "(21) 98765-4321", instituicao: "TJRJ", acessos: 1247 },
+          { id: 2, nome: "Dra. Fernanda Lima Rezende", email: "fernanda.rezende@tjrj.gov.br", oab: "OAB/RJ 72.890", perfil: "Árbitro", status: "ativo", dataCadastro: "2024-02-20", ultimoAcesso: "2026-08-03T16:45:00", telefone: "(21) 99876-5432", instituicao: "TJRJ", acessos: 832 },
+          { id: 3, nome: "Dr. Carlos Eduardo Pinto", email: "carlos.pinto@oab.org.br", oab: "OAB/SP 128.456", perfil: "Advogado", status: "ativo", dataCadastro: "2024-03-10", ultimoAcesso: "2026-08-04T08:15:00", telefone: "(11) 97654-3210", instituicao: "TJRJ", acessos: 456 },
+          { id: 4, nome: "Maria Oliveira Santos", email: "maria.santos@email.com", oab: "", perfil: "Parte", status: "ativo", dataCadastro: "2024-04-05", ultimoAcesso: "2026-07-28T14:20:00", telefone: "(21) 96543-2109", instituicao: "TJRJ", acessos: 89 },
+          { id: 5, nome: "Dr. Paulo Henrique Costa", email: "paulo.costa@tjrj.gov.br", oab: "OAB/RJ 91.234", perfil: "Árbitro", status: "inativo", dataCadastro: "2024-01-22", ultimoAcesso: "2026-06-15T10:00:00", telefone: "(21) 95432-1098", instituicao: "TJRJ", acessos: 312 },
+          { id: 6, nome: "Dra. Ana Beatriz Ferreira", email: "ana.ferreira@tjrj.gov.br", oab: "OAB/RJ 103.567", perfil: "Advogado", status: "ativo", dataCadastro: "2024-05-18", ultimoAcesso: "2026-08-03T11:30:00", telefone: "(21) 94321-0987", instituicao: "TJRJ", acessos: 234 },
+          { id: 7, nome: "José Ricardo Moura", email: "jose.moura@email.com", oab: "", perfil: "Parte", status: "ativo", dataCadastro: "2024-06-01", ultimoAcesso: "2026-07-30T09:45:00", telefone: "(21) 93210-9876", instituicao: "TJRJ", acessos: 45 },
+          { id: 8, nome: "Dra. Patrícia Menezes Gomes", email: "patricia.gomes@camera.arb.br", oab: "OAB/RJ 87.432", perfil: "Advogado", status: "ativo", dataCadastro: "2024-03-25", ultimoAcesso: "2026-08-02T15:10:00", telefone: "(21) 92109-8765", instituicao: "TJRJ", acessos: 567 },
+          { id: 9, nome: "Dr. Marcelo Teixeira Barros", email: "marcelo.barros@tjrj.gov.br", oab: "OAB/RJ 55.678", perfil: "Árbitro", status: "inativo", dataCadastro: "2024-02-08", ultimoAcesso: "2026-05-20T08:00:00", telefone: "(21) 91098-7654", instituicao: "TJRJ", acessos: 178 },
+          { id: 10, nome: "Fernanda da Silva Nunes", email: "fernanda.nunes@email.com", oab: "", perfil: "Parte", status: "ativo", dataCadastro: "2024-07-12", ultimoAcesso: "2026-08-01T13:25:00", telefone: "(21) 90987-6543", instituicao: "TJRJ", acessos: 23 }
+        ];
+
+        const gestao_de_usuarios_perfisCores = {
+          "Presidente": { bg: "bg-yellow-50", text: "text-yellow-800", border: "border-yellow-300", dot: "bg-yellow-500" },
+          "Árbitro": { bg: "bg-blue-50", text: "text-blue-800", border: "border-blue-300", dot: "bg-blue-500" },
+          "Advogado": { bg: "bg-emerald-50", text: "text-emerald-800", border: "border-emerald-300", dot: "bg-emerald-500" },
+          "Parte": { bg: "bg-neutral-100", text: "text-neutral-600", border: "border-neutral-300", dot: "bg-neutral-400" }
+        };
+
+        const gestao_de_usuarios_iniciais = (nome) => {
+          const partes = nome.split(" ");
+          return (partes[0][0] + (partes.length > 1 ? partes[partes.length - 1][0] : "")).toUpperCase();
+        };
+
+        const gestao_de_usuarios_coresAvatar = ["#0A0A0A", "#D4AF37", "#1a3a5c", "#4a6741", "#6b3a5c", "#5c4a1a", "#2c4a6b", "#6b2c2c"];
+
+        const gestao_de_usuarios_hashCor = (str) => {
+          let hash = 0;
+          for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
+          return gestao_de_usuarios_coresAvatar[Math.abs(hash) % gestao_de_usuarios_coresAvatar.length];
+        };
+
+        const gestao_de_usuarios_formatarData = (iso) => {
+          if (!iso) return "—";
+          const d = new Date(iso + "T00:00:00");
+          return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+        };
+
+        const gestao_de_usuarios_formatarAcesso = (iso) => {
+          if (!iso) return "Nunca";
+          const d = new Date(iso);
+          const agora = new Date();
+          const diffMs = agora - d;
+          const diffH = Math.floor(diffMs / 3600000);
+          if (diffH < 1) return "Agora mesmo";
+          if (diffH < 24) return `Há ${diffH}h`;
+          const diffD = Math.floor(diffH / 24);
+          if (diffD < 7) return `Há ${diffD}d`;
+          return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+        };
+
+        let gestao_de_usuarios_filtros = { perfil: "todos", status: "todos", periodo: "todos", busca: "" };
+        let gestao_de_usuarios_usuarios = [...gestao_de_usuarios_dados];
+
+        function gestao_de_usuarios_filtrar() {
+          let lista = [...gestao_de_usuarios_dados];
+          const b = gestao_de_usuarios_filtros.busca.toLowerCase().trim();
+          if (b) lista = lista.filter(u => u.nome.toLowerCase().includes(b) || u.email.toLowerCase().includes(b) || (u.oab && u.oab.toLowerCase().includes(b)));
+          if (gestao_de_usuarios_filtros.perfil !== "todos") lista = lista.filter(u => u.perfil === gestao_de_usuarios_filtros.perfil);
+          if (gestao_de_usuarios_filtros.status !== "todos") lista = lista.filter(u => u.status === gestao_de_usuarios_filtros.status);
+          if (gestao_de_usuarios_filtros.periodo !== "todos") {
+            const agora = new Date();
+            lista = lista.filter(u => {
+              const diffMs = agora - new Date(u.dataCadastro + "T00:00:00");
+              const diffM = diffMs / (1000 * 60 * 60 * 24 * 30);
+              if (gestao_de_usuarios_filtros.periodo === "30d") return diffM <= 1;
+              if (gestao_de_usuarios_filtros.periodo === "90d") return diffM <= 3;
+              if (gestao_de_usuarios_filtros.periodo === "1a") return diffM <= 12;
+              return true;
+            });
+          }
+          gestao_de_usuarios_usuarios = lista;
+          gestao_de_usuarios_renderTabela();
+          gestao_de_usuarios_atualizarContador();
+        }
+
+        function gestao_de_usuarios_renderTabela() {
+          const tbody = document.getElementById("gu-tbody");
+          const vazio = document.getElementById("gu-vazio");
+          if (!tbody) return;
+          if (gestao_de_usuarios_usuarios.length === 0) {
+            tbody.innerHTML = "";
+            vazio.classList.remove("hidden");
+            return;
+          }
+          vazio.classList.add("hidden");
+          tbody.innerHTML = gestao_de_usuarios_usuarios.map(u => {
+            const pc = gestao_de_usuarios_perfisCores[u.perfil] || gestao_de_usuarios_perfisCores["Parte"];
+            const cor = gestao_de_usuarios_hashCor(u.nome);
+            const iniciais = gestao_de_usuarios_iniciais(u.nome);
+            return `
+            <tr class="border-b border-neutral-100 hover:bg-neutral-50 transition-colors cursor-pointer" onclick="gestao_de_usuarios_abrirDetalhe(${u.id})">
+              <td class="py-3 pl-3 pr-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style="background-color:${cor}">${iniciais}</div>
+                  <div class="min-w-0">
+                    <div class="text-sm font-semibold text-neutral-900 truncate">${u.nome}</div>
+                    <div class="text-xs text-neutral-400 md:hidden">${u.email}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="py-3 px-2 text-sm text-neutral-600 hidden md:table-cell">${u.email}</td>
+              <td class="py-3 px-2 hidden md:table-cell">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${pc.bg} ${pc.text} ${pc.border}">
+                  <span class="w-1.5 h-1.5 rounded-full ${pc.dot}"></span>${u.perfil}
+                </span>
+              </td>
+              <td class="py-3 px-2 hidden md:table-cell">
+                <button onclick="event.stopPropagation(); gestao_de_usuarios_toggleStatus(${u.id})" class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${u.status === 'ativo' ? 'bg-emerald-500' : 'bg-neutral-300'}">
+                  <span class="pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${u.status === 'ativo' ? 'translate-x-4' : 'translate-x-0'}"></span>
+                </button>
+              </td>
+              <td class="py-3 px-2 text-xs text-neutral-500 hidden lg:table-cell">${gestao_de_usuarios_formatarData(u.dataCadastro)}</td>
+              <td class="py-3 px-2 text-xs text-neutral-500 hidden lg:table-cell">${gestao_de_usuarios_formatarAcesso(u.ultimoAcesso)}</td>
+              <td class="py-3 pl-2 pr-3">
+                <div class="flex items-center gap-0.5">
+                  <button onclick="event.stopPropagation(); gestao_de_usuarios_acaoEditar(${u.id})" class="p-1.5 rounded-md hover:bg-neutral-200 transition-colors" title="Editar perfil">
+                    <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                  </button>
+                  <button onclick="event.stopPropagation(); gestao_de_usuarios_acaoRedefinirSenha(${u.id})" class="p-1.5 rounded-md hover:bg-neutral-200 transition-colors" title="Redefinir senha">
+                    <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.527c-.473-.174-.93-.376-1.368-.593a18.456 18.456 0 00-3.063 0c-.438.217-.895.419-1.368.593A6 6 0 015.25 18.75m12-12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  </button>
+                  <button onclick="event.stopPropagation(); gestao_de_usuarios_acaoAlterarPerfil(${u.id})" class="p-1.5 rounded-md hover:bg-neutral-200 transition-colors" title="Alterar perfil de acesso">
+                    <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-3.4-5.72 4.125 4.125 0 00-3.4 5.72 9.337 9.337 0 00-4.121.952zm0 0a9.38 9.38 0 01-2.625-.372M15 19.128v.003M15 19.128a9.38 9.38 0 01-2.625-.372M15 19.128v.003M9 19.128a9.38 9.38 0 01-2.625-.372M9 19.128v.003M12 14.25a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"/></svg>
+                  </button>
+                  <button onclick="event.stopPropagation(); gestao_de_usuarios_acaoHistorico(${u.id})" class="p-1.5 rounded-md hover:bg-neutral-200 transition-colors" title="Histórico de acessos">
+                    <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  </button>
+                  <button onclick="event.stopPropagation(); gestao_de_usuarios_acaoDesativar(${u.id})" class="p-1.5 rounded-md hover:bg-red-50 transition-colors" title="Desativar conta">
+                    <svg class="w-4 h-4 text-neutral-400 hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>`;
+          }).join("");
+        }
+
+        function gestao_de_usuarios_atualizarContador() {
+          const el = document.getElementById("gu-contador");
+          if (el) el.textContent = `${gestao_de_usuarios_usuarios.length} usuário${gestao_de_usuarios_usuarios.length !== 1 ? 's' : ''}`;
+        }
+
+        function gestao_de_usuarios_toggleStatus(id) {
+          const u = gestao_de_usuarios_dados.find(x => x.id === id);
+          if (!u) return;
+          u.status = u.status === "ativo" ? "inativo" : "ativo";
+          toast(`Usuário ${u.nome.split(' ')[0]} ${u.status === 'ativo' ? 'ativado' : 'desativado'} com sucesso.`, "ok");
+          gestao_de_usuarios_filtrar();
+        }
+
+        function gestao_de_usuarios_acaoEditar(id) {
+          const u = gestao_de_usuarios_dados.find(x => x.id === id);
+          if (!u) return;
+          gestao_de_usuarios_abrirModalEdicao(u);
+        }
+
+        function gestao_de_usuarios_acaoRedefinirSenha(id) {
+          const u = gestao_de_usuarios_dados.find(x => x.id === id);
+          if (!u) return;
+          abrirModal(`
+            <div class="space-y-4">
+              <p class="text-sm text-neutral-600">Um link de redefinição de senha será enviado para o e-mail cadastrado.</p>
+              <div class="bg-neutral-50 rounded-lg p-3">
+                <p class="text-sm font-medium text-neutral-900">${u.nome}</p>
+                <p class="text-xs text-neutral-500">${u.email}</p>
+              </div>
+              <div class="flex gap-3 justify-end">
+                <button onclick="fecharModal()" class="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors">Cancelar</button>
+                <button onclick="gestao_de_usuarios_confirmarRedefinir(${id})" class="px-4 py-2 text-sm font-medium bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 active:scale-95 transition-all">Enviar link</button>
+              </div>
+            </div>`, "Redefinir Senha");
+        }
+
+        function gestao_de_usuarios_confirmarRedefinir(id) {
+          fecharModal();
+          setTimeout(() => toast("Link de redefinição enviado com sucesso.", "ok"), 300);
+        }
+
+        function gestao_de_usuarios_acaoAlterarPerfil(id) {
+          const u = gestao_de_usuarios_dados.find(x => x.id === id);
+          if (!u) return;
+          const perfis = ["Presidente", "Árbitro", "Advogado", "Parte"];
+          abrirModal(`
+            <div class="space-y-4">
+              <p class="text-sm text-neutral-600">Selecione o novo perfil de acesso para <strong>${u.nome}</strong>.</p>
+              <div class="space-y-2">
+                ${perfis.map(p => {
+                  const pc = gestao_de_usuarios_perfisCores[p];
+                  const sel = u.perfil === p;
+                  return `<label class="flex items-center gap-3 p-3 rounded-lg border ${sel ? 'border-yellow-400 bg-yellow-50' : 'border-neutral-200 hover:border-neutral-300'} cursor-pointer transition-all">
+                    <input type="radio" name="gu-perfil" value="${p}" ${sel ? 'checked' : ''} class="accent-[#0A0A0A]" onchange="gestao_de_usuarios_selecionarPerfil(this, ${id})">
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border ${pc.bg} ${pc.text} ${pc.border}">
+                      <span class="w-1.5 h-1.5 rounded-full ${pc.dot}"></span>${p}
+                    </span>
+                  </label>`;
+                }).join("")}
+              </div>
+              <div class="flex gap-3 justify-end">
+                <button onclick="fecharModal()" class="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors">Cancelar</button>
+                <button onclick="gestao_de_usuarios_salvarPerfil(${id})" class="px-4 py-2 text-sm font-medium bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 active:scale-95 transition-all">Salvar</button>
+              </div>
+            </div>`, "Alterar Perfil de Acesso");
+        }
+
+        let gestao_de_usuarios_novoPerfil = null;
+        function gestao_de_usuarios_selecionarPerfil(el, id) { gestao_de_usuarios_novoPerfil = el.value; }
+        function gestao_de_usuarios_salvarPerfil(id) {
+          const u = gestao_de_usuarios_dados.find(x => x.id === id);
+          if (!u || !gestao_de_usuarios_novoPerfil) return;
+          u.perfil = gestao_de_usuarios_novoPerfil;
+          gestao_de_usuarios_novoPerfil = null;
+          fecharModal();
+          toast(`Perfil de ${u.nome.split(' ')[0]} alterado para "${u.perfil}".`, "ok");
+          gestao_de_usuarios_filtrar();
+        }
+
+        function gestao_de_usuarios_acaoHistorico(id) {
+          const u = gestao_de_usuarios_dados.find(x => x.id === id);
+          if (!u) return;
+          const historico = [
+            { data: "2026-08-04", hora: "09:32", ip: "189.45.12.33", acao: "Login efetuado", dispositivo: "Chrome / Windows" },
+            { data: "2026-08-03", hora: "16:45", ip: "189.45.12.33", acao: "Visualizou processo #0427/2024", dispositivo: "Chrome / Windows" },
+            { data: "2026-08-03", hora: "14:20", ip: "201.28.77.91", acao: "Login efetuado", dispositivo: "Safari / iOS" },
+            { data: "2026-08-02", hora: "11:30", ip: "189.45.12.33", acao: "Enviou documento pet_0427.pdf", dispositivo: "Chrome / Windows" },
+            { data: "2026-08-01", hora: "09:15", ip: "177.12.88.44", acao: "Login efetuado", dispositivo: "Firefox / Linux" },
+            { data: "2026-07-30", hora: "17:00", ip: "189.45.12.33", acao: "Atualizou dados cadastrais", dispositivo: "Chrome / Windows" },
+            { data: "2026-07-28", hora: "14:20", ip: "177.12.88.44", acao: "Login efetuado", dispositivo: "Firefox / Linux" },
+            { data: "2026-07-25", hora: "10:00", ip: "189.45.12.33", acao: "Visualizou relatório gerencial", dispositivo: "Chrome / Windows" }
+          ];
+          const histHTML = historico.map(h => `
+            <div class="flex gap-3 py-2.5 ${h !== historico[historico.length - 1] ? 'border-b border-neutral-100' : ''}">
+              <div class="flex flex-col items-center">
+                <div class="w-2 h-2 rounded-full bg-neutral-300"></div>
+                <div class="w-px flex-1 bg-neutral-100"></div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-medium text-neutral-800">${h.acao}</div>
+                <div class="text-xs text-neutral-400 mt-0.5">${h.data} às ${h.hora} · ${h.dispositivo}</div>
+                <div class="text-xs text-neutral-400">IP: ${h.ip}</div>
+              </div>
+            </div>`).join("");
+
+          abrirModal(`
+            <div class="space-y-1 max-h-[60vh] overflow-y-auto">
+              <div class="flex items-center gap-3 mb-4 pb-3 border-b border-neutral-200">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-semibold" style="background-color:${gestao_de_usuarios_hashCor(u.nome)}">${gestao_de_usuarios_iniciais(u.nome)}</div>
+                <div>
+                  <p class="text-sm font-semibold text-neutral-900">${u.nome}</p>
+                  <p class="text-xs text-neutral-500">${u.email}</p>
+                </div>
+              </div>
+              ${histHTML}
+            </div>`, `Histórico de Acessos — ${u.nome.split(' ')[0]}`);
+        }
+
+        function gestao_de_usuarios_acaoDesativar(id) {
+          const u = gestao_de_usuarios_dados.find(x => x.id === id);
+          if (!u) return;
+          abrirModal(`
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-neutral-900">Desativar conta de <strong>${u.nome}</strong>?</p>
+                  <p class="text-xs text-neutral-500 mt-1">O usuário perderá acesso imediatamente. Esta ação pode ser revertida posteriormente.</p>
+                </div>
+              </div>
+              <div class="flex gap-3 justify-end">
+                <button onclick="fecharModal()" class="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors">Cancelar</button>
+                <button onclick="gestao_de_usuarios_confirmarDesativar(${id})" class="px-4 py-2 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 active:scale-95 transition-all">Desativar</button>
+              </div>
+            </div>`, "Confirmar Desativação");
+        }
+
+        function gestao_de_usuarios_confirmarDesativar(id) {
+          const u = gestao_de_usuarios_dados.find(x => x.id === id);
+          if (!u) return;
+          u.status = "inativo";
+          fecharModal();
+          toast(`Conta de ${u.nome.split(' ')[0]} desativada.`, "info");
+          gestao_de_usuarios_filtrar();
+        }
+
+        function gestao_de_usuarios_abrirDetalhe(id) {
+          const u = gestao_de_usuarios_dados.find(x => x.id === id);
+          if (!u) return;
+          const pc = gestao_de_usuarios_perfisCores[u.perfil] || gestao_de_usuarios_perfisCores["Parte"];
+          const cor = gestao_de_usuarios_hashCor(u.nome);
+          const iniciais = gestao_de_usuarios_iniciais(u.nome);
+
+          abrirModal(`
+            <div class="space-y-5">
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white text-lg font-bold" style="background-color:${cor}">${iniciais}</div>
+                <div>
+                  <h3 class="text-base font-semibold text-neutral-900">${u.nome}</h3>
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border mt-1 ${pc.bg} ${pc.text} ${pc.border}">
+                    <span class="w-1.5 h-1.5 rounded-full ${pc.dot}"></span>${u.perfil}
+                  </span>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="bg-neutral-50 rounded-lg p-3">
+                  <div class="text-xs text-neutral-500 mb-1">E-mail</div>
+                  <div class="text-sm font-medium text-neutral-800">${u.email}</div>
+                </div>
+                <div class="bg-neutral-50 rounded-lg p-3">
+                  <div class="text-xs text-neutral-500 mb-1">Telefone</div>
+                  <div class="text-sm font-medium text-neutral-800">${u.telefone || "—"}</div>
+                </div>
+                <div class="bg-neutral-50 rounded-lg p-3">
+                  <div class="text-xs text-neutral-500 mb-1">OAB</div>
+                  <div class="text-sm font-medium text-neutral-800">${u.oab || "Não informado"}</div>
+                </div>
+                <div class="bg-neutral-50 rounded-lg p-3">
+                  <div class="text-xs text-neutral-500 mb-1">Status</div>
+                  <span class="inline-flex items-center gap-1 text-sm font-medium ${u.status === 'ativo' ? 'text-emerald-700' : 'text-red-600'}">
+                    <span class="w-1.5 h-1.5 rounded-full ${u.status === 'ativo' ? 'bg-emerald-500' : 'bg-red-500'}"></span>${u.status === 'ativo' ? 'Ativo' : 'Inativo'}
+                  </span>
+                </div>
+                <div class="bg-neutral-50 rounded-lg p-3">
+                  <div class="text-xs text-neutral-500 mb-1">Data de cadastro</div>
+                  <div class="text-sm font-medium text-neutral-800">${gestao_de_usuarios_formatarData(u.dataCadastro)}</div>
+                </div>
+                <div class="bg-neutral-50 rounded-lg p-3">
+                  <div class="text-xs text-neutral-500 mb-1">Último acesso</div>
+                  <div class="text-sm font-medium text-neutral-800">${gestao_de_usuarios_formatarAcesso(u.ultimoAcesso)}</div>
+                </div>
+              </div>
+              <div class="bg-neutral-50 rounded-lg p-3">
+                <div class="text-xs text-neutral-500 mb-1">Total de acessos</div>
+                <div class="text-2xl font-bold text-neutral-900">${u.acessos.toLocaleString("pt-BR")}</div>
+              </div>
+              <div class="flex gap-3 justify-end pt-2">
+                <button onclick="fecharModal()" class="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors">Fechar</button>
+                <button onclick="fecharModal(); setTimeout(() => gestao_de_usuarios_acaoEditar(${u.id}), 200)" class="px-4 py-2 text-sm font-medium bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 active:scale-95 transition-all">Editar perfil</button>
+              </div>
+            </div>`, `Detalhes do Usuário`);
+        }
+
+        function gestao_de_usuarios_abrirModalEdicao(u) {
+          const pc = gestao_de_usuarios_perfisCores[u.perfil] || gestao_de_usuarios_perfisCores["Parte"];
+          const tabDados = `
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs font-medium text-neutral-700 mb-1">Nome completo</label>
+                <input id="ge-nome" value="${u.nome}" class="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all" />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-neutral-700 mb-1">E-mail</label>
+                <input id="ge-email" type="email" value="${u.email}" class="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all" />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-neutral-700 mb-1">Telefone</label>
+                <input id="ge-tel" value="${u.telefone || ""}" class="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all" placeholder="(00) 00000-0000" />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-neutral-700 mb-1">OAB</label>
+                <input id="ge-oab" value="${u.oab || ""}" class="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all" placeholder="OAB/UF 000000" />
+              </div>
+            </div>`;
+
+          const tabPerfil = `
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs font-medium text-neutral-700 mb-2">Perfil de acesso</label>
+                <div class="grid grid-cols-2 gap-2">
+                  ${["Presidente", "Árbitro", "Advogado", "Parte"].map(p => {
+                    const pcc = gestao_de_usuarios_perfisCores[p];
+                    const sel = u.perfil === p;
+                    return `<label class="flex items-center gap-2 p-2.5 rounded-lg border ${sel ? 'border-yellow-400 bg-yellow-50' : 'border-neutral-200'} cursor-pointer transition-all">
+                      <input type="radio" name="ge-perfil" value="${p}" ${sel ? 'checked' : ''} class="accent-[#0A0A0A]" onchange="document.querySelectorAll('[name=ge-perfil]').forEach(r => r.closest('label').className = r.closest('label').className.replace('border-yellow-400 bg-yellow-50','border-neutral-200'); this.closest('label').className = this.closest('label').className.replace('border-neutral-200','border-yellow-400 bg-yellow-50')">
+                      <span class="w-2 h-2 rounded-full ${pcc.dot}"></span>
+                      <span class="text-xs font-medium text-neutral-700">${p}</span>
+                    </label>`;
+                  }).join("")}
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-neutral-700 mb-1">Instituição</label>
+                <input value="${u.instituicao || "TJRJ"}" disabled class="w-full px-3 py-2 text-sm border border-neutral-200 rounded-lg bg-neutral-100 text-neutral-500 cursor-not-allowed" />
+              </div>
+            </div>`;
+
+          const tabPermissoes = `
+            <div class="space-y-2">
+              ${["Visualizar processos", "Criar processos", "Editar processos", "Excluir processos", "Gerenciar agenda", "Enviar documentos", "Visualizar relatórios", "Gerenciar usuários", "Configurar sistema"].map(perm => {
+                const habilitado = u.perfil === "Presidente" || !perm.includes("Gerenciar usuários") && !perm.includes("Configurar sistema");
+                return `<label class="flex items-center justify-between p-2.5 rounded-lg border border-neutral-200 hover:border-neutral-300 cursor-pointer transition-all">
+                  <span class="text-sm text-neutral-700">${perm}</span>
+                  <input type="checkbox" ${habilitado ? 'checked' : 'disabled'} class="w-4 h-4 rounded border-neutral-300 accent-[#0A0A0A]" />
+                </label>`;
+              }).join("")}
+            </div>`;
+
+          const tabAuditoria = `
+            <div class="space-y-2 max-h-64 overflow-y-auto">
+              ${[
+                { data: "04/08/2026", acao: "Alteração de perfil", usuario: "Admin Sistema", ip: "10.0.0.1" },
+                { data: "02/08/2026", acao: "Redefinição de senha", usuario: u.nome, ip: u.email.includes("tjrj") ? "189.45.12.33" : "201.28.77.91" },
+                { data: "15/01/2026", acao: "Cadastro inicial", usuario: "Admin Sistema", ip: "10.0.0.1" }
+              ].map(a => `
+                <div class="flex items-start gap-3 p-2.5 bg-neutral-50 rounded-lg">
+                  <div class="w-1.5 h-1.5 rounded-full bg-yellow-500 mt-1.5 shrink-0"></div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-sm text-neutral-800">${a.acao}</div>
+                    <div class="text-xs text-neutral-400 mt-0.5">${a.data} por ${a.usuario} · ${a.ip}</div>
+                  </div>
+                </div>`).join("")}
+            </div>`;
+
+          abrirModal(`
+            <div class="space-y-0">
+              <div class="flex border-b border-neutral-200 mb-4">
+                <button onclick="gestao_de_usuarios_mudarAba(this, 'dados')" class="gu-tab px-3 py-2 text-sm font-medium border-b-2 border-[#0A0A0A] text-neutral-900">Dados pessoais</button>
+                <button onclick="gestao_de_usuarios_mudarAba(this, 'perfil')" class="gu-tab px-3 py-2 text-sm font-medium border-b-2 border-transparent text-neutral-500 hover:text-neutral-700">Perfil</button>
+                <button onclick="gestao_de_usuarios_mudarAba(this, 'permissoes')" class="gu-tab px-3 py-2 text-sm font-medium border-b-2 border-transparent text-neutral-500 hover:text-neutral-700">Permissões</button>
+                <button onclick="gestao_de_usuarios_mudarAba(this, 'auditoria')" class="gu-tab px-3 py-2 text-sm font-medium border-b-2 border-transparent text-neutral-500 hover:text-neutral-700">Auditoria</button>
+              </div>
+              <div id="gu-tab-dados" class="gu-tab-content">${tabDados}</div>
+              <div id="gu-tab-perfil" class="gu-tab-content hidden">${tabPerfil}</div>
+              <div id="gu-tab-permissoes" class="gu-tab-content hidden">${tabPermissoes}</div>
+              <div id="gu-tab-auditoria" class="gu-tab-content hidden">${tabAuditoria}</div>
+              <div class="flex gap-3 justify-end pt-4 border-t border-neutral-100">
+                <button onclick="fecharModal()" class="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors">Cancelar</button>
+                <button onclick="gestao_de_usuarios_salvarEdicao(${u.id})" class="px-5 py-2 text-sm font-medium bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 active:scale-95 transition-all">Salvar alterações</button>
+              </div>
+            </div>`, `Editar Usuário — ${u.nome}`);
+        }
+
+        function gestao_de_usuarios_mudarAba(btn, tab) {
+          document.querySelectorAll(".gu-tab").forEach(b => { b.classList.remove("border-[#0A0A0A]", "text-neutral-900"); b.classList.add("border-transparent", "text-neutral-500"); });
+          btn.classList.remove("border-transparent", "text-neutral-500"); btn.classList.add("border-[#0A0A0A]", "text-neutral-900");
+          document.querySelectorAll(".gu-tab-content").forEach(c => c.classList.add("hidden"));
+          const t = document.getElementById("gu-tab-" + tab);
+          if (t) t.classList.remove("hidden");
+        }
+
+        function gestao_de_usuarios_salvarEdicao(id) {
+          const u = gestao_de_usuarios_dados.find(x => x.id === id);
+          if (!u) return;
+          const nome = document.getElementById("ge-nome");
+          const email = document.getElementById("ge-email");
+          if (nome) u.nome = nome.value;
+          if (email) u.email = email.value;
+          fecharModal();
+          toast(`Dados de ${u.nome.split(' ')[0]} atualizados com sucesso.`, "ok");
+          gestao_de_usuarios_filtrar();
+        }
+
+        function gestao_de_usuarios_inicializar() {
+          gestao_de_usuarios_filtrar();
+          const buscaEl = document.getElementById("gu-busca");
+          if (buscaEl) buscaEl.addEventListener("input", (e) => { gestao_de_usuarios_filtros.busca = e.target.value; gestao_de_usuarios_filtrar(); });
+          document.querySelectorAll("[data-gu-filtro-perfil]").forEach(el => {
+            el.addEventListener("click", () => {
+              document.querySelectorAll("[data-gu-filtro-perfil]").forEach(x => x.classList.remove("bg-neutral-900", "text-white")); el.classList.add("bg-neutral-900", "text-white");
+              gestao_de_usuarios_filtros.perfil = el.dataset.guFiltroPerfil; gestao_de_usuarios_filtrar();
+            });
+          });
+          document.querySelectorAll("[data-gu-filtro-status]").forEach(el => {
+            el.addEventListener("click", () => {
+              document.querySelectorAll("[data-gu-filtro-status]").forEach(x => { x.classList.remove("bg-neutral-900", "text-white"); x.classList.add("bg-neutral-100", "text-neutral-600"); }); el.classList.remove("bg-neutral-100", "text-neutral-600"); el.classList.add("bg-neutral-900", "text-white");
+              gestao_de_usuarios_filtros.status = el.dataset.guFiltroStatus; gestao_de_usuarios_filtrar();
+            });
+          });
+          document.querySelectorAll("[data-gu-filtro-periodo]").forEach(el => {
+            el.addEventListener("click", () => {
+              document.querySelectorAll("[data-gu-filtro-periodo]").forEach(x => { x.classList.remove("bg-neutral-900", "text-white"); x.classList.add("bg-neutral-100", "text-neutral-600"); }); el.classList.remove("bg-neutral-100", "text-neutral-600"); el.classList.add("bg-neutral-900", "text-white");
+              gestao_de_usuarios_filtros.periodo = el.dataset.guFiltroPeriodo; gestao_de_usuarios_filtrar();
+            });
+          });
+          const btnNovo = document.getElementById("gu-btn-novo");
+          if (btnNovo) btnNovo.addEventListener("click", () => { gestao_de_usuarios_abrirModalNovoUsuario(); });
+        }
+
+        function gestao_de_usuarios_abrirModalNovoUsuario() {
+          abrirModal(`
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-3">
+                <div class="col-span-2">
+                  <label class="block text-xs font-medium text-neutral-700 mb-1">Nome completo</label>
+                  <input id="gn-nome" class="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all" placeholder="Nome completo" />
+                </div>
+                <div class="col-span-2">
+                  <label class="block text-xs font-medium text-neutral-700 mb-1">E-mail</label>
+                  <input id="gn-email" type="email" class="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all" placeholder="email@exemplo.com" />
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-neutral-700 mb-1">Telefone</label>
+                  <input id="gn-tel" class="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all" placeholder="(00) 00000-0000" />
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-neutral-700 mb-1">Número OAB</label>
+                  <input id="gn-oab" class="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all" placeholder="OAB/UF 000000" />
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-neutral-700 mb-1">Perfil</label>
+                  <select id="gn-perfil" class="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all bg-white">
+                    <option value="Parte">Parte</option>
+                    <option value="Advogado">Advogado</option>
+                    <option value="Árbitro">Árbitro</option>
+                    <option value="Presidente">Presidente</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-neutral-700 mb-1">Instituição</label>
+                  <select class="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all bg-white">
+                    <option>TJRJ — Tribunal de Justiça do RJ</option>
+                  </select>
+                </div>
+              </div>
+              <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                <p class="text-xs text-yellow-800">Um e-mail de boas-vindas com instruções de acesso será enviado automaticamente ao usuário cadastrado.</p>
+              </div>
+              <div class="flex gap-3 justify-end">
+                <button onclick="fecharModal()" class="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors">Cancelar</button>
+                <button onclick="gestao_de_usuarios_cadastrarNovo()" class="px-5 py-2 text-sm font-medium bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 active:scale-95 transition-all">Cadastrar usuário</button>
+              </div>
+            </div>`, "Novo Usuário");
+        }
+
+        function gestao_de_usuarios_cadastrarNovo() {
+          const nome = document.getElementById("gn-nome");
+          const email = document.getElementById("gn-email");
+          const perfil = document.getElementById("gn-perfil");
+          const tel = document.getElementById("gn-tel");
+          const oab = document.getElementById("gn-oab");
+          if (!nome || !nome.value.trim() || !email || !email.value.trim()) {
+            toast("Preencha nome e e-mail para continuar.", "erro");
+            return;
+          }
+          const novo = {
+            id: Date.now(),
+            nome: nome.value.trim(),
+            email: email.value.trim(),
+            oab: oab ? oab.value.trim() : "",
+            perfil: perfil ? perfil.value : "Parte",
+            status: "ativo",
+            dataCadastro: new Date().toISOString().split("T")[0],
+            ultimoAcesso: "",
+            telefone: tel ? tel.value.trim() : "",
+            instituicao: "TJRJ",
+            acessos: 0
+          };
+          gestao_de_usuarios_dados.unshift(novo);
+          fecharModal();
+          toast(`Usuário ${novo.nome.split(' ')[0]} cadastrado com sucesso.`, "ok");
+          gestao_de_usuarios_filtrar();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+          const t = setTimeout(gestao_de_usuarios_inicializar, 50);
+          window._guInit = t;
+        });
+      </script>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-display font-bold text-neutral-900">Gestão de Usuários</h2>
+            <p class="text-xs text-neutral-500 mt-0.5">Gerencie acessos, perfis e permissões da instituição</p>
+          </div>
+          <button id="gu-btn-novo" class="px-3 py-2 bg-neutral-900 text-white text-xs font-semibold rounded-lg hover:bg-neutral-800 active:scale-95 transition-all flex items-center gap-1.5 shadow-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+            Novo usuário
+          </button>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2.5">
+          <div class="card p-3">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs text-neutral-500 font-medium">Total</span>
+              <div class="w-7 h-7 rounded-lg bg-neutral-100 flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-3.4-5.72 4.125 4.125 0 00-3.4 5.72 9.337 9.337 0 00-4.121.952zm0 0a9.38 9.38 0 01-2.625-.372M15 19.128v.003M15 19.128a9.38 9.38 0 01-2.625-.372M15 19.128v.003M9 19.128a9.38 9.38 0 01-2.625-.372M9 19.128v.003M12 14.25a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"/></svg>
+              </div>
+            </div>
+            <div class="text-xl font-bold text-neutral-900">${gestao_de_usuarios_dados.length}</div>
+            <div class="text-xs text-neutral-400 mt-0.5">cadastrados</div>
+          </div>
+          <div class="card p-3">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs text-neutral-500 font-medium">Ativos</span>
+              <div class="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+            </div>
+            <div class="text-xl font-bold text-emerald-700">${gestao_de_usuarios_dados.filter(u => u.status === 'ativo').length}</div>
+            <div class="text-xs text-neutral-400 mt-0.5">ativos agora</div>
+          </div>
+          <div class="card p-3">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs text-neutral-500 font-medium">Perfis</span>
+              <div class="w-7 h-7 rounded-lg bg-yellow-50 flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-yellow-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 18.72a9.38 9.38 0 003.624-.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-3.4-5.72 4.125 4.125 0 00-3.4 5.72 9.337 9.337 0 00-4.121.952M15 9.75V5.25A2.25 2.25 0 0012.75 3h-5.5A2.25 2.25 0 005.25 5.25v9.5A2.25 2.25 0 007.25 16.5h1.5m9-4.5h.008v.008h-.008v-.008zm3 0h.008v.008h-.008v-.008zM8.25 15a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"/></svg>
+              </div>
+            </div>
+            <div class="text-xl font-bold text-neutral-900">${[...new Set(gestao_de_usuarios_dados.map(u => u.perfil))].length}</div>
+            <div class="text-xs text-neutral-400 mt-0.5">tipos ativos</div>
+          </div>
+        </div>
+
+        <div class="card p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Distribuição por Perfil</h3>
+          </div>
+          <div class="flex items-center gap-4">
+            <svg viewBox="0 0 200 120" class="w-32 h-20 shrink-0">
+              ${(() => {
+                const perfis = {};
+                gestao_de_usuarios_dados.forEach(u => { perfis[u.perfil] = (perfis[u.perfil] || 0) + 1; });
+                const cores = { "Presidente": "#D4AF37", "Árbitro": "#2563EB", "Advogado": "#059669", "Parte": "#A8A29E" };
+                let ang = 0;
+                const total = gestao_de_usuarios_dados.length;
+                return Object.entries(perfis).map(([p, c]) => {
+                  const slice = (c / total) * 360;
+                  const x1 = 100 + 80 * Math.cos((ang - 90) * Math.PI / 180);
+                  const y1 = 100 + 80 * Math.sin((ang - 90) * Math.PI / 180);
+                  const x2 = 100 + 80 * Math.cos(((ang + slice) - 90) * Math.PI / 180);
+                  const y2 = 100 + 80 * Math.sin(((ang + slice) - 90) * Math.PI / 180);
+                  const large = slice > 180 ? 1 : 0;
+                  const cor = cores[p] || "#0A0A0A";
+                  const path = ang === 0 && slice >= 360 ? `<circle cx="100" cy="100" r="80" fill="none" stroke="${cor}" stroke-width="30"/>` : `<path d="M100,100 L${x1},${y1} A80,80 0 ${large},1 ${x2},${y2} Z" fill="${cor}" opacity="0.85"/>`;
+                  ang += slice;
+                  return path;
+                }).join("");
+              })()}
+              <circle cx="100" cy="100" r="50" fill="white"/>
+              <text x="100" y="96" text-anchor="middle" class="text-sm font-bold" fill="#0A0A0A" font-size="16">${gestao_de_usuarios_dados.length}</text>
+              <text x="100" y="110" text-anchor="middle" fill="#737373" font-size="8">usuários</text>
+            </svg>
+            <div class="space-y-2 flex-1">
+              ${(() => {
+                const perfis = {};
+                gestao_de_usuarios_dados.forEach(u => { perfis[u.perfil] = (perfis[u.perfil] || 0) + 1; });
+                const cores = { "Presidente": "bg-yellow-500", "Árbitro": "bg-blue-500", "Advogado": "bg-emerald-500", "Parte": "bg-neutral-400" };
+                return Object.entries(perfis).sort((a, b) => b[1] - a[1]).map(([p, c]) => `
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full ${cores[p]}"></span>
+                      <span class="text-xs text-neutral-600">${p}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="w-16 h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+                        <div class="h-full ${cores[p]} rounded-full" style="width:${(c / gestao_de_usuarios_dados.length * 100).toFixed(0)}%"></div>
+                      </div>
+                      <span class="text-xs font-semibold text-neutral-700 w-5 text-right">${c}</span>
+                    </div>
+                  </div>`).join("");
+              })()}
+            </div>
+          </div>
+        </div>
+
+        <div class="card overflow-hidden">
+          <div class="p-4 border-b border-neutral-100">
+            <div class="relative mb-3">
+              <svg class="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+              <input id="gu-busca" type="text" placeholder="Buscar por nome, e-mail ou OAB..." class="w-full pl-9 pr-3 py-2 text-sm border border-neutral-200 rounded-lg focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none transition-all bg-neutral-50 focus:bg-white" />
+            </div>
+            <div class="flex gap-1.5 overflow-x-auto pb-0.5 -mx-1 px-1">
+              <button data-gu-filtro-perfil="todos" class="gu-filtro shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-neutral-900 text-white transition-all">Todos</button>
+              <button data-gu-filtro-perfil="Presidente" class="gu-filtro shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-yellow-50 text-yellow-800 border border-yellow-200 hover:border-yellow-300 transition-all">Presidente</button>
+              <button data-gu-filtro-perfil="Árbitro" class="gu-filtro shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-blue-50 text-blue-800 border border-blue-200 hover:border-blue-300 transition-all">Árbitro</button>
+              <button data-gu-filtro-perfil="Advogado" class="gu-filtro shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 hover:border-emerald-300 transition-all">Advogado</button>
+              <button data-gu-filtro-perfil="Parte" class="gu-filtro shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-neutral-100 text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all">Parte</button>
+            </div>
+            <div class="flex gap-1.5 mt-2.5 overflow-x-auto pb-0.5 -mx-1 px-1">
+              <button data-gu-filtro-status="todos" class="gu-filtro-st shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-neutral-900 text-white transition-all">Todos</button>
+              <button data-gu-filtro-status="ativo" class="gu-filtro-st shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 hover:border-emerald-300 transition-all">Ativos</button>
+              <button data-gu-filtro-status="inativo" class="gu-filtro-st shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-red-50 text-red-700 border border-red-200 hover:border-red-300 transition-all">Inativos</button>
+              <span class="border-l border-neutral-200 mx-1"></span>
+              <button data-gu-filtro-periodo="todos" class="gu-filtro-pr shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-neutral-100 text-neutral-600 hover:text-neutral-800 transition-all">Todos</button>
+              <button data-gu-filtro-periodo="30d" class="gu-filtro-pr shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-neutral-100 text-neutral-600 hover:text-neutral-800 transition-all">30 dias</button>
+              <button data-gu-filtro-periodo="90d" class="gu-filtro-pr shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-neutral-100 text-neutral-600 hover:text-neutral-800 transition-all">90 dias</button>
+              <button data-gu-filtro-periodo="1a" class="gu-filtro-pr shrink-0 px-2.5 py-1 text-xs font-medium rounded-md bg-neutral-100 text-neutral-600 hover:text-neutral-800 transition-all">1 ano</button>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[600px]">
+              <thead>
+                <tr class="border-b border-neutral-200 bg-neutral-50/80">
+                  <th class="text-left py-2.5 pl-3 pr-2 text-xs font-semibold text-neutral-500 uppercase tracking-wider">Usuário</th>
+                  <th class="text-left py-2.5 px-2 text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">E-mail</th>
+                  <th class="text-left py-2.5 px-2 text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">Perfil</th>
+                  <th class="text-center py-2.5 px-2 text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">Status</th>
+                  <th class="text-left py-2.5 px-2 text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden lg:table-cell">Cadastro</th>
+                  <th class="text-left py-2.5 px-2 text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden lg:table-cell">Último acesso</th>
+                  <th class="text-right py-2.5 pl-2 pr-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="gu-tbody"></tbody>
+            </table>
+          </div>
+          <div id="gu-vazio" class="hidden p-8 text-center">
+            <svg class="w-12 h-12 text-neutral-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-3.4-5.72 4.125 4.125 0 00-3.4 5.72 9.337 9.337 0 00-4.121.952zm0 0a9.38 9.38 0 01-2.625-.372M15 19.128v.003M15 19.128a9.38 9.38 0 01-2.625-.372M15 19.128v.003M9 19.128a9.38 9.38 0 01-2.625-.372M9 19.128v.003M12 14.25a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"/></svg>
+            <p class="text-sm text-neutral-500 font-medium">Nenhum usuário encontrado</p>
+            <p class="text-xs text-neutral-400 mt-1">Tente ajustar os filtros ou a busca</p>
+          </div>
+          <div class="flex items-center justify-between px-4 py-2.5 border-t border-neutral-100 bg-neutral-50/50">
+            <span id="gu-contador" class="text-xs text-neutral-500">10 usuários</span>
+            <div class="flex gap-1">
+              <button class="px-2.5 py-1 text-xs font-medium text-neutral-400 bg-neutral-100 rounded cursor-not-allowed">&lt;</button>
+              <button class="px-2.5 py-1 text-xs font-medium text-white bg-neutral-900 rounded">1</button>
+              <button class="px-2.5 py-1 text-xs font-medium text-neutral-600 hover:bg-neutral-100 rounded transition-colors">2</button>
+              <button class="px-2.5 py-1 text-xs font-medium text-neutral-400 bg-neutral-100 rounded cursor-not-allowed">&gt;</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          <button onclick="mostrarTela('cadastro-da-instituicao')" class="flex-1 py-2.5 text-xs font-medium text-neutral-600 border border-neutral-200 rounded-lg hover:border-neutral-300 hover:bg-neutral-50 active:scale-95 transition-all text-center">
+            ← Instituição
+          </button>
+          <button onclick="mostrarTela('relatorios-gerenciais')" class="flex-1 py-2.5 text-xs font-medium bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 active:scale-95 transition-all text-center">
+            Relatórios →
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- TELAS -->
     </main>
 
