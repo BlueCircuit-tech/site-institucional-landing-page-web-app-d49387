@@ -2555,6 +2555,307 @@ select.input-cad { appearance: none; background-image: url("data:image/svg+xml,%
       </div>
     </section>
 
+    <section data-tela="notificacoes" class="hidden">
+  <div class="px-4 py-4 space-y-4 animate-fadeIn">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-xl font-display font-bold text-marca-900">Notificações</h1>
+        <p class="text-sm text-gray-500 mt-0.5">8 não lidas de 24 totais</p>
+      </div>
+      <button onclick="notificacoes_marcarTodasLidas()" class="flex items-center gap-1.5 px-3 py-2 bg-marca-900 text-white text-xs font-semibold rounded-lg active:scale-95 transition-all hover:bg-marca-800">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        Marcar todas como lidas
+      </button>
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <button onclick="notificacoes_togglePrefs()" class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center">
+            <svg class="w-4 h-4 text-marca-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <span class="text-sm font-semibold text-marca-900">Preferências de Notificação</span>
+        </div>
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <div id="notificacoes-filtros" class="flex flex-wrap gap-2">
+      <button onclick="notificacoes_filtrar('todas')" data-filtro="todas" class="notif-filtro-btn active px-3 py-1.5 text-xs font-semibold rounded-full border transition-all">Todas</button>
+      <button onclick="notificacoes_filtrar('audiencia')" data-filtro="audiencia" class="notif-filtro-btn px-3 py-1.5 text-xs font-semibold rounded-full border transition-all flex items-center gap-1"><span>🔔</span> Audiências</button>
+      <button onclick="notificacoes_filtrar('documento')" data-filtro="documento" class="notif-filtro-btn px-3 py-1.5 text-xs font-semibold rounded-full border transition-all flex items-center gap-1"><span>📄</span> Documentos</button>
+      <button onclick="notificacoes_filtrar('prazo')" data-filtro="prazo" class="notif-filtro-btn px-3 py-1.5 text-xs font-semibold rounded-full border transition-all flex items-center gap-1"><span>⏰</span> Prazos</button>
+      <button onclick="notificacoes_filtrar('mensagem')" data-filtro="mensagem" class="notif-filtro-btn px-3 py-1.5 text-xs font-semibold rounded-full border transition-all flex items-center gap-1"><span>💬</span> Mensagens</button>
+      <button onclick="notificacoes_filtrar('permissao')" data-filtro="permissao" class="notif-filtro-btn px-3 py-1.5 text-xs font-semibold rounded-full border transition-all flex items-center gap-1"><span>⚙️</span> Permissões</button>
+    </div>
+
+    <div id="notificacoes-busca-wrap" class="relative">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input id="notificacoes-busca" type="text" placeholder="Buscar notificação..." oninput="notificacoes_buscar()" class="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-marca-300 focus:border-marca-500 transition-all font-body">
+    </div>
+
+    <div id="notificacoes-lista" class="space-y-2.5"></div>
+
+    <div id="notificacoes-vazio" class="hidden text-center py-12">
+      <div class="w-16 h-16 mx-auto rounded-full bg-gray-100 flex items-center justify-center mb-3">
+        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      </div>
+      <p class="text-sm text-gray-500 font-medium">Nenhuma notificação encontrada</p>
+      <p class="text-xs text-gray-400 mt-1">Tente ajustar os filtros ou busca</p>
+    </div>
+  </div>
+
+  <div id="notificacoes-modal-prefs" class="hidden fixed inset-0 z-50 flex items-end justify-center">
+    <div class="absolute inset-0 bg-black/50" onclick="notificacoes_fecharPrefs()"></div>
+    <div class="relative w-full max-w-[430px] bg-white rounded-t-2xl p-5 space-y-5 animate-slideUp">
+      <div class="w-10 h-1 bg-gray-300 rounded-full mx-auto mb-2"></div>
+      <h3 class="text-lg font-display font-bold text-marca-900 text-center">Preferências de Notificação</h3>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-semibold text-marca-900">WhatsApp</p>
+            <p class="text-xs text-gray-500">Receber alertas por mensagem</p>
+          </div>
+          <button onclick="notificacoes_toggleSwitch(this)" data-canal="whatsapp" class="notif-switch w-11 h-6 bg-marca-900 rounded-full relative transition-colors"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform translate-x-5"></span></button>
+        </div>
+        <div class="border-t border-gray-100"></div>
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-semibold text-marca-900">Push (App)</p>
+            <p class="text-xs text-gray-500">Notificações no dispositivo</p>
+          </div>
+          <button onclick="notificacoes_toggleSwitch(this)" data-canal="push" class="notif-switch w-11 h-6 bg-marca-900 rounded-full relative transition-colors"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform translate-x-5"></span></button>
+        </div>
+        <div class="border-t border-gray-100"></div>
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-semibold text-marca-900">E-mail</p>
+            <p class="text-xs text-gray-500">Resumo diário por e-mail</p>
+          </div>
+          <button onclick="notificacoes_toggleSwitch(this)" data-canal="email" class="notif-switch w-11 h-6 bg-gray-300 rounded-full relative transition-colors"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform"></span></button>
+        </div>
+        <div class="border-t border-gray-100"></div>
+        <div>
+          <p class="text-sm font-semibold text-marca-900 mb-2">Tipos de notificação</p>
+          <div class="space-y-2.5">
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="checkbox" checked class="notif-tipo-check w-4 h-4 rounded border-gray-300 text-marca-900 focus:ring-marca-500"><span class="text-sm text-gray-700">Audiências e prazos</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="checkbox" checked class="notif-tipo-check w-4 h-4 rounded border-gray-300 text-marca-900 focus:ring-marca-500"><span class="text-sm text-gray-700">Protocolo de documentos</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="checkbox" checked class="notif-tipo-check w-4 h-4 rounded border-gray-300 text-marca-900 focus:ring-marca-500"><span class="text-sm text-gray-700">Mensagens de partes</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="checkbox" checked class="notif-tipo-check w-4 h-4 rounded border-gray-300 text-marca-900 focus:ring-marca-500"><span class="text-sm text-gray-700">Alterações de permissões</span></label>
+          </div>
+        </div>
+      </div>
+      <button onclick="notificacoes_salvarPrefs()" class="w-full py-3 bg-marca-900 text-white text-sm font-semibold rounded-xl active:scale-95 transition-all hover:bg-marca-800">Salvar Preferências</button>
+    </div>
+  </div>
+
+  <script>
+    const notificacoes_dados = [
+      { id: 1, tipo: 'audiencia', titulo: 'Audiência de Mediação', descricao: 'Audiência de mediação amanhã às 14h — Processo 0042/2026', timestamp: '2026-08-04T10:30:00', lida: false, processo: '0042/2026', detalhe: 'Processo entre Silva & Associados e TechSolutions LTDA. Sala 3 — Bloco A. Arbitro: Dr. Ricardo Mendes.' },
+      { id: 2, tipo: 'documento', titulo: 'Documento Protocolado', descricao: 'Contestação protocolada no Processo 0038/2026', timestamp: '2026-08-04T09:15:00', lida: false, processo: '0038/2026', detalhe: 'Documento: Contestação apresentada por TechSolutions LTDA. Protocolo Nº 2026-00891. Páginas: 34. Valor: R$ 2.400,00.' },
+      { id: 3, tipo: 'prazo', titulo: 'Prazo Vencendo em 48h', descricao: 'Prazo de apresentação de alegações finais — Processo 0045/2026', timestamp: '2026-08-04T08:00:00', lida: false, processo: '0045/2026', detalhe: 'Processo entre Imobiliária Central e Construtora Horizonte. Prazo expira em 02/08/2026 às 18h.' },
+      { id: 4, tipo: 'mensagem', titulo: 'Nova Mensagem de Parte', descricao: 'Dra. Ana Beatriz enviou mensagem sobre o Processo 0038/2026', timestamp: '2026-08-04T07:45:00', lida: false, processo: '0038/2026', detalhe: '"Prezado Presidente, solicito esclarecimento sobre o prazo de juntada de documentos. Atenciosamente, Dra. Ana Beatriz."' },
+      { id: 5, tipo: 'permissao', titulo: 'Alteração de Permissões', descricao: 'Dr. Carlos Eduardo recebeu acesso ao Processo 0042/2026', timestamp: '2026-08-03T18:20:00', lida: false, processo: '0042/2026', detalhe: 'Permissão concedida pelo Administrador. Nível de acesso: Visualização e protocolo. Motivo: Designação como advogado de parte.' },
+      { id: 6, tipo: 'audiencia', titulo: 'Audiência de Conciliação', descricao: 'Audiência agendada para 06/08 às 09h — Processo 0038/2026', timestamp: '2026-08-03T14:00:00', lida: true, processo: '0038/2026', detalhe: 'Processo entre TechSolutions LTDA e Silva & Associados. Sala 2 — Bloco A. Mediador: Dr. Paulo Henrique.' },
+      { id: 7, tipo: 'documento', titulo: 'Laudo Pericial Disponível', descricao: 'Laudo pericial do Dr. Fernando Costa anexado ao Processo 0045/2026', timestamp: '2026-08-03T11:30:00', lida: true, processo: '0045/2026', detalhe: 'Laudo pericial contábil. Processo Nº 2026-00785. Perito: Dr. Fernando Costa. Valor: R$ 5.600,00.' },
+      { id: 8, tipo: 'prazo', titulo: 'Prazo Vencendo Amanhã', descricao: 'Recurso de apelação — Processo 0031/2026', timestamp: '2026-08-03T09:00:00', lida: true, processo: '0031/2026', detalhe: 'Processo entre Construtora Horizonte e Município de Campinas. Prazo: 04/08/2026 às 18h.' },
+      { id: 9, tipo: 'mensagem', titulo: 'Mensagem do Mediador', descricao: 'Dr. Paulo Henrique solicitou documentos complementares — Processo 0038/2026', timestamp: '2026-08-02T16:45:00', lida: true, processo: '0038/2026', detalhe: '"Solicito a juntada do contrato social e procuração atualizada para a audiência do dia 06/08."' },
+      { id: 10, tipo: 'permissao', titulo: 'Novo Usuário Criado', descricao: 'Secretária Juliana Moura foi cadastrada com nível de assistente', timestamp: '2026-08-02T10:00:00', lida: true, processo: '-', detalhe: 'Usuário: Juliana Moura. Perfil: Assistente Administrativo. Acesso: Protocolo e agenda. Criado por: Admin.' }
+    ];
+
+    const notificacoes_icones = {
+      audiencia: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>',
+      documento: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>',
+      prazo: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+      mensagem: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>',
+      permissao: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>'
+    };
+
+    const notificacoes_tipoCores = {
+      audiencia: { bg: 'bg-amber-50', border: 'border-amber-200', icon: 'text-amber-600', badge: 'bg-amber-100 text-amber-800' },
+      documento: { bg: 'bg-blue-50', border: 'border-blue-200', icon: 'text-blue-600', badge: 'bg-blue-100 text-blue-800' },
+      prazo: { bg: 'bg-red-50', border: 'border-red-200', icon: 'text-red-600', badge: 'bg-red-100 text-red-800' },
+      mensagem: { bg: 'bg-emerald-50', border: 'border-emerald-200', icon: 'text-emerald-600', badge: 'bg-emerald-100 text-emerald-800' },
+      permissao: { bg: 'bg-purple-50', border: 'border-purple-200', icon: 'text-purple-600', badge: 'bg-purple-100 text-purple-800' }
+    };
+
+    const notificacoes_tipoLabels = {
+      audiencia: 'Audiência',
+      documento: 'Documento',
+      prazo: 'Prazo',
+      mensagem: 'Mensagem',
+      permissao: 'Permissão'
+    };
+
+    let notificacoes_filtroAtual = 'todas';
+    let notificacoes_buscaTermo = '';
+
+    function notificacoes_tempoRelativo(iso) {
+      const diff = Date.now() - new Date(iso).getTime();
+      const minutos = Math.floor(diff / 60000);
+      if (minutos < 1) return 'agora mesmo';
+      if (minutos < 60) return `há ${minutos} min`;
+      const horas = Math.floor(minutos / 60);
+      if (horas < 24) return `há ${horas}h`;
+      const dias = Math.floor(horas / 24);
+      return `há ${dias}d`;
+    }
+
+    function notificacoes_renderizar() {
+      const lista = document.getElementById('notificacoes-lista');
+      const vazio = document.getElementById('notificacoes-vazio');
+      let filtradas = notificacoes_dados;
+
+      if (notificacoes_filtroAtual !== 'todas') {
+        filtradas = filtradas.filter(n => n.tipo === notificacoes_filtroAtual);
+      }
+      if (notificacoes_buscaTermo) {
+        const termo = notificacoes_buscaTermo.toLowerCase();
+        filtradas = filtradas.filter(n =>
+          n.titulo.toLowerCase().includes(termo) ||
+          n.descricao.toLowerCase().includes(termo) ||
+          n.processo.toLowerCase().includes(termo)
+        );
+      }
+
+      filtradas.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+      if (filtradas.length === 0) {
+        lista.innerHTML = '';
+        vazio.classList.remove('hidden');
+        return;
+      }
+      vazio.classList.add('hidden');
+
+      lista.innerHTML = filtradas.map(n => {
+        const cor = notificacoes_tipoCores[n.tipo];
+        const inicial = n.titulo.charAt(0);
+        return `
+        <div onclick="notificacoes_abrirDetalhe(${n.id})" class="card bg-white rounded-xl border ${n.lida ? 'border-gray-100' : cor.border} shadow-sm overflow-hidden cursor-pointer hover:shadow-md active:scale-[0.98] transition-all">
+          <div class="flex gap-3 p-3.5">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl ${cor.bg} flex items-center justify-center ${cor.icon}">
+              ${notificacoes_icones[n.tipo]}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-sm font-semibold text-marca-900 truncate">${n.titulo}</h3>
+                    ${!n.lida ? '<span class="flex-shrink-0 w-2 h-2 rounded-full bg-marca-600"></span>' : ''}
+                  </div>
+                  <p class="text-xs text-gray-600 mt-0.5 line-clamp-2 leading-relaxed">${n.descricao}</p>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-2.5">
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold ${cor.badge}">${notificacoes_tipoLabels[n.tipo]}</span>
+                  ${n.processo !== '-' ? `<span class="text-[10px] font-mono text-gray-500">${n.processo}</span>` : ''}
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-gray-400 flex-shrink-0">${notificacoes_tempoRelativo(n.timestamp)}</span>
+                  ${!n.lida ? `<button onclick="event.stopPropagation(); notificacoes_marcarLida(${n.id})" class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg hover:bg-gray-100 active:scale-90 transition-all" title="Marcar como lida"><svg class="w-4 h-4 text-gray-400 hover:text-marca-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>` : '<svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
+      notificacoes_atualizarContador();
+    }
+
+    function notificacoes_marcarLida(id) {
+      const n = notificacoes_dados.find(x => x.id === id);
+      if (n) {
+        n.lida = true;
+        notificacoes_renderizar();
+        toast('Notificação marcada como lida', 'ok');
+      }
+    }
+
+    function notificacoes_marcarTodasLidas() {
+      let count = 0;
+      notificacoes_dados.forEach(n => { if (!n.lida) { n.lida = true; count++; } });
+      notificacoes_renderizar();
+      toast(`${count} notificações marcadas como lidas`, 'ok');
+    }
+
+    function notificacoes_filtrar(tipo) {
+      notificacoes_filtroAtual = tipo;
+      document.querySelectorAll('.notif-filtro-btn').forEach(btn => {
+        const isActive = btn.dataset.filtro === tipo;
+        btn.classList.remove('bg-marca-900', 'text-white', 'border-marca-900');
+        if (isActive) {
+          btn.classList.add('bg-marca-900', 'text-white', 'border-marca-900');
+        } else {
+          btn.classList.add('bg-white', 'text-gray-600', 'border-gray-200', 'hover:border-marca-300');
+        }
+      });
+      notificacoes_renderizar();
+    }
+
+    function notificacoes_buscar() {
+      notificacoes_buscaTermo = document.getElementById('notificacoes-busca').value.trim();
+      notificacoes_renderizar();
+    }
+
+    function notificacoes_abrirDetalhe(id) {
+      const n = notificacoes_dados.find(x => x.id === id);
+      if (!n) return;
+      const cor = notificacoes_tipoCores[n.tipo];
+      if (!n.lida) { n.lida = true; notificacoes_renderizar(); }
+      const html = `
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl ${cor.bg} flex items-center justify-center ${cor.icon}">${notificacoes_icones[n.tipo]}</div>
+            <div>
+              <span class="inline-block px-2 py-0.5 rounded-md text-xs font-semibold ${cor.badge}">${notificacoes_tipoLabels[n.tipo]}</span>
+              ${n.processo !== '-' ? `<span class="ml-2 text-xs font-mono text-gray-500">${n.processo}</span>` : ''}
+            </div>
+          </div>
+          <h3 class="text-base font-display font-bold text-marca-900">${n.titulo}</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">${n.detalhe}</p>
+          <div class="bg-gray-50 rounded-lg p-3">
+            <p class="text-xs text-gray-500"><span class="font-semibold">Recebido:</span> ${new Date(n.timestamp).toLocaleString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+            <p class="text-xs text-gray-500 mt-1"><span class="font-semibold">Status:</span> ${n.lida ? '<span class="text-green-600">Lida</span>' : '<span class="text-amber-600">Não lida</span>'}</p>
+          </div>
+          ${n.processo !== '-' ? `<button onclick="fecharModal(); mostrarTela('detalhe-do-processo')" class="w-full py-2.5 bg-marca-900 text-white text-sm font-semibold rounded-xl active:scale-95 transition-all hover:bg-marca-800">Ver Processo</button>` : ''}
+        </div>`;
+      abrirModal(html, 'Detalhe da Notificação');
+    }
+
+    function notificacoes_togglePrefs() {
+      document.getElementById('notificacoes-modal-prefs').classList.remove('hidden');
+    }
+    function notificacoes_fecharPrefs() {
+      document.getElementById('notificacoes-modal-prefs').classList.add('hidden');
+    }
+    function notificacoes_toggleSwitch(btn) {
+      const span = btn.querySelector('span');
+      const isOn = btn.classList.contains('bg-marca-900');
+      if (isOn) {
+        btn.classList.remove('bg-marca-900'); btn.classList.add('bg-gray-300');
+        span.classList.remove('translate-x-5'); span.classList.add('translate-x-0');
+      } else {
+        btn.classList.remove('bg-gray-300'); btn.classList.add('bg-marca-900');
+        span.classList.remove('translate-x-0'); span.classList.add('translate-x-5');
+      }
+    }
+    function notificacoes_salvarPrefs() {
+      notificacoes_fecharPrefs();
+      toast('Preferências de notificação salvas', 'ok');
+    }
+    function notificacoes_atualizarContador() {
+      const naoLidas = notificacoes_dados.filter(n => !n.lida).length;
+      const subt = document.querySelector('[data-tela="notificacoes"] .text-gray-500');
+      if (subt) subt.textContent = `${naoLidas} não lidas de ${notificacoes_dados.length} totais`;
+    }
+
+    notificacoes_filtrar('todas');
+    notificacoes_renderizar();
+  </script>
+</section>
+
     <!-- TELAS -->
     </main>
 
