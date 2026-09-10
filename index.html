@@ -3231,6 +3231,551 @@ function relatorios_gerenciais_imprimir() {
 document.addEventListener('DOMContentLoaded', relatorios_gerenciais_inicializar);
 </script>
 
+    <section data-tela="nova-audiencia" class="hidden">
+    <div class="fade-in">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <nav class="flex items-center gap-2 text-xs text-gray-400 mb-1">
+                    <button onclick="mostrarTela('agenda-e-audiencias')" class="hover:text-[#D4AF37] transition-colors">
+                        <svg class="w-3.5 h-3.5 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        Agenda
+                    </button>
+                    <span>/</span>
+                    <span class="text-[#D4AF37]">Nova Audiência</span>
+                </nav>
+                <h1 class="text-xl font-display font-bold text-[#0A0A0A]">Agendar Nova Audiência</h1>
+                <p class="text-xs text-gray-500 mt-0.5">Preencha os dados abaixo para criar o agendamento</p>
+            </div>
+            <button onclick="mostrarTela('agenda-e-audiencias')" class="w-9 h-9 rounded-xl border border-gray-200 flex items-center justify-center hover:border-[#D4AF37] transition-colors active:scale-95">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <form id="form-audiencia" onsubmit="nova_audiencia_enviar(event)">
+
+            <div class="card p-5 mb-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-[#0A0A0A] flex items-center justify-center flex-shrink-0">
+                        <span class="text-white font-bold text-xs">1</span>
+                    </div>
+                    <h2 class="font-display font-bold text-[#0A0A0A] text-sm">Dados Básicos</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5">Processo <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <select id="aud-processo" required onchange="nova_audiencia_carregarProcesso(this.value)" class="w-full appearance-none bg-white border border-gray-200 rounded-xl px-4 py-3 pr-10 text-sm text-[#0A0A0A] focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition-all">
+                                <option value="">Selecione um processo</option>
+                                <option value="001/2024">Proc. nº 001/2024 — Comercial Silva</option>
+                                <option value="002/2024">Proc. nº 002/2024 — Família Oliveira</option>
+                                <option value="003/2024">Proc. nº 003/2024 — Trabalhista Mendes</option>
+                                <option value="004/2024">Proc. nº 004/2024 — Consumidor Santos</option>
+                                <option value="005/2024">Proc. nº 005/2024 — Imobiliário Costa</option>
+                            </select>
+                            <svg class="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </div>
+
+                    <div id="aud-processo-info" class="hidden bg-gray-50 border border-gray-100 rounded-xl p-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[#D4AF37]/10 flex items-center justify-center flex-shrink-0">
+                                <span class="text-[#D4AF37] font-bold text-xs">CS</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-[#0A0A0A]" id="aud-processo-nome">—</p>
+                                <p class="text-xs text-gray-500" id="aud-processo-partes">—</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tipo de Audiência <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="tipo-audiencia-option cursor-pointer">
+                                <input type="radio" name="tipo-audiencia" value="conciliacao" class="hidden" checked>
+                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center transition-all hover:border-[#D4AF37]/50">
+                                    <svg class="w-6 h-6 mx-auto mb-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                    <span class="text-xs font-medium text-gray-600">Conciliação</span>
+                                </div>
+                            </label>
+                            <label class="tipo-audiencia-option cursor-pointer">
+                                <input type="radio" name="tipo-audiencia" value="mediacao" class="hidden">
+                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center transition-all hover:border-[#D4AF37]/50">
+                                    <svg class="w-6 h-6 mx-auto mb-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 01-3.46-.618L3 21l1.36-3.64C3.336 15.984 3 14.76 3 13c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                                    <span class="text-xs font-medium text-gray-600">Mediação</span>
+                                </div>
+                            </label>
+                            <label class="tipo-audiencia-option cursor-pointer">
+                                <input type="radio" name="tipo-audiencia" value="instrucao" class="hidden">
+                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center transition-all hover:border-[#D4AF37]/50">
+                                    <svg class="w-6 h-6 mx-auto mb-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    <span class="text-xs font-medium text-gray-600">Instrução</span>
+                                </div>
+                            </label>
+                            <label class="tipo-audiencia-option cursor-pointer">
+                                <input type="radio" name="tipo-audiencia" value="julgamento" class="hidden">
+                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center transition-all hover:border-[#D4AF37]/50">
+                                    <svg class="w-6 h-6 mx-auto mb-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+                                    <span class="text-xs font-medium text-gray-600">Julgamento</span>
+                                </div>
+                            </label>
+                            <label class="tipo-audiencia-option cursor-pointer col-span-2">
+                                <input type="radio" name="tipo-audiencia" value="pericia" class="hidden">
+                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center transition-all hover:border-[#D4AF37]/50">
+                                    <svg class="w-6 h-6 mx-auto mb-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                    <span class="text-xs font-medium text-gray-600">Perícia</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5">Data <span class="text-red-500">*</span></label>
+                        <input type="date" id="aud-data" required class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition-all" onchange="nova_audiencia_carregarHorarios()">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-2">Horário Disponível <span class="text-red-500">*</span></label>
+                        <div id="aud-horarios-grid" class="grid grid-cols-3 gap-2">
+                            <p class="col-span-3 text-xs text-gray-400 text-center py-4">Selecione uma data para ver horários</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-2">Duração Estimada <span class="text-red-500">*</span></label>
+                        <div class="flex gap-2">
+                            <label class="duracao-option flex-1 cursor-pointer">
+                                <input type="radio" name="duracao" value="30" class="hidden">
+                                <div class="border-2 border-gray-200 rounded-xl py-2.5 text-center transition-all hover:border-[#D4AF37]/50">
+                                    <span class="text-xs font-medium text-gray-600">30 min</span>
+                                </div>
+                            </label>
+                            <label class="duracao-option flex-1 cursor-pointer">
+                                <input type="radio" name="duracao" value="60" class="hidden" checked>
+                                <div class="border-2 border-gray-200 rounded-xl py-2.5 text-center transition-all hover:border-[#D4AF37]/50">
+                                    <span class="text-xs font-medium text-gray-600">1 hora</span>
+                                </div>
+                            </label>
+                            <label class="duracao-option flex-1 cursor-pointer">
+                                <input type="radio" name="duracao" value="120" class="hidden">
+                                <div class="border-2 border-gray-200 rounded-xl py-2.5 text-center transition-all hover:border-[#D4AF37]/50">
+                                    <span class="text-xs font-medium text-gray-600">2 horas</span>
+                                </div>
+                            </label>
+                            <label class="duracao-option flex-1 cursor-pointer">
+                                <input type="radio" name="duracao" value="custom" class="hidden">
+                                <div class="border-2 border-gray-200 rounded-xl py-2.5 text-center transition-all hover:border-[#D4AF37]/50">
+                                    <span class="text-xs font-medium text-gray-600">Custom</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="duracao-custom-container" class="hidden">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5">Duração Customizada (minutos)</label>
+                        <input type="number" id="aud-duracao-custom" min="15" step="15" placeholder="Ex: 90" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition-all">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5">Objetivo da Audiência</label>
+                        <textarea id="aud-objetivo" rows="3" placeholder="Descreva o objetivo e pontos a serem discutidos..." class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition-all resize-none"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-5 mb-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-[#0A0A0A] flex items-center justify-center flex-shrink-0">
+                        <span class="text-white font-bold text-xs">2</span>
+                    </div>
+                    <h2 class="font-display font-bold text-[#0A0A0A] text-sm">Local da Audiência</h2>
+                </div>
+
+                <div class="flex gap-2 mb-4">
+                    <button type="button" id="btn-tipo-sala-fisica" onclick="nova_audiencia_tipoSala('fisica')" class="flex-1 py-2.5 rounded-xl text-xs font-semibold transition-all bg-[#0A0A0A] text-white">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        Sala Física
+                    </button>
+                    <button type="button" id="btn-tipo-sala-virtual" onclick="nova_audiencia_tipoSala('virtual')" class="flex-1 py-2.5 rounded-xl text-xs font-semibold transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        Sala Virtual
+                    </button>
+                </div>
+
+                <div id="aud-sala-fisica-content">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1.5">Selecione a Sala</label>
+                    <div class="space-y-2" id="aud-salas-lista"></div>
+                </div>
+
+                <div id="aud-sala-virtual-content" class="hidden">
+                    <div class="bg-gray-50 border border-gray-100 rounded-xl p-4">
+                        <div class="flex items-start gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-full bg-[#D4AF37]/10 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold text-[#0A0A0A]">Videoconferência</p>
+                                <p class="text-xs text-gray-500">O link será gerado automaticamente</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" id="aud-gravacao" checked class="w-4 h-4 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]">
+                                <div>
+                                    <span class="text-xs font-medium text-[#0A0A0A]">Gravação Automática</span>
+                                    <p class="text-xs text-gray-400">A audiência será gravada integralmente</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" id="aud-transcricao" class="w-4 h-4 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]">
+                                <div>
+                                    <span class="text-xs font-medium text-[#0A0A0A]">Transcrição Automática</span>
+                                    <p class="text-xs text-gray-400">Gerar transcrição por IA</p>
+                                </div>
+                            </label>
+                        </div>
+                        <div id="aud-link-gerado" class="hidden mt-3 p-3 bg-green-50 border border-green-200 rounded-xl">
+                            <p class="text-xs font-semibold text-green-700 mb-1">Link gerado com sucesso</p>
+                            <p class="text-xs text-green-600 font-mono break-all" id="aud-link-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-5 mb-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-[#0A0A0A] flex items-center justify-center flex-shrink-0">
+                        <span class="text-white font-bold text-xs">3</span>
+                    </div>
+                    <h2 class="font-display font-bold text-[#0A0A0A] text-sm">Participantes</h2>
+                </div>
+
+                <div class="relative mb-3">
+                    <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" id="aud-busca-participante" placeholder="Buscar por nome, função ou registro..." class="w-full bg-white border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition-all" oninput="nova_audiencia_buscarParticipantes(this.value)">
+                </div>
+
+                <div id="aud-participantes-lista" class="space-y-2 max-h-64 overflow-y-auto pr-1"></div>
+
+                <div id="aud-selecionados" class="mt-3 hidden">
+                    <p class="text-xs font-semibold text-gray-500 mb-2">Selecionados</p>
+                    <div id="aud-selecionados-list" class="flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+
+            <div class="card p-5 mb-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-[#0A0A0A] flex items-center justify-center flex-shrink-0">
+                        <span class="text-white font-bold text-xs">4</span>
+                    </div>
+                    <h2 class="font-display font-bold text-[#0A0A0A] text-sm">Notificações</h2>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center gap-3 cursor-pointer p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" id="aud-notif-whatsapp" checked class="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            <span class="text-xs font-medium text-[#0A0A0A]">Enviar via WhatsApp</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" id="aud-notif-email" checked class="w-4 h-4 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            <span class="text-xs font-medium text-[#0A0A0A]">E-mail</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" id="aud-notif-push" checked class="w-4 h-4 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                            <span class="text-xs font-medium text-[#0A0A0A]">Push Notification</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" id="aud-notif-sms" class="w-4 h-4 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                            <span class="text-xs font-medium text-[#0A0A0A]">SMS</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-gray-100 p-3 z-50">
+                <div class="max-w-[430px] mx-auto flex gap-3">
+                    <button type="button" onclick="mostrarTela('agenda-e-audiencias')" class="flex-1 py-3 rounded-xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-all active:scale-95">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="flex-1 py-3 rounded-xl bg-[#D4AF37] text-white text-sm font-semibold hover:bg-[#c9a230] transition-all active:scale-95 shadow-lg shadow-[#D4AF37]/20">
+                        Agendar Audiência
+                    </button>
+                </div>
+            </div>
+            <div class="h-20"></div>
+        </form>
+    </div>
+</section>
+
+<script>
+(function() {
+    const svgIconChevron = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>';
+    const svgIconCheck = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+
+    const salasFisicas = [
+        { id: 1, nome: 'Sala de Conciliação A', capacidade: 12, recursos: ['Projetor', 'Vídeo', 'Ar-condicionado'], piso: '2º Andar' },
+        { id: 2, nome: 'Sala de Mediação B', capacidade: 8, recursos: ['Vídeo', 'Ar-condicionado'], piso: '2º Andar' },
+        { id: 3, nome: 'Sala de Julgamento C', capacidade: 20, recursos: ['Projetor', 'Vídeo', 'Som', 'Ar-condicionado'], piso: '3º Andar' },
+        { id: 4, nome: 'Sala de Perícia D', capacidade: 6, recursos: ['Vídeo', 'Ar-condicionado'], piso: '1º Andar' },
+        { id: 5, nome: 'Sala Multiuso E', capacidade: 16, recursos: ['Projetor', 'Vídeo', 'Ar-condicionado', 'Acessível'], piso: '1º Andar' },
+    ];
+
+    const participantesDisponiveis = [
+        { id: 1, nome: 'Dr. Ricardo Mendes', funcao: 'Advogado', registro: 'OAB/SP 123.456', avatar: 'RM', cor: '#D4AF37', tipo: 'advogado' },
+        { id: 2, nome: 'Dra. Ana Beatriz Costa', funcao: 'Juíza', registro: 'TJSP — 2ª Vara', avatar: 'AC', cor: '#0A0A0A', tipo: 'juiz' },
+        { id: 3, nome: 'Dr. Carlos Eduardo Lima', funcao: 'Árbitro', registro: 'CBArb 789', avatar: 'CL', cor: '#D4AF37', tipo: 'arbitro' },
+        { id: 4, nome: 'Sra. Patrícia Almeida', funcao: 'Conciliadora', registro: 'CNJ Cert. 456', avatar: 'PA', cor: '#0A0A0A', tipo: 'conciliador' },
+        { id: 5, nome: 'Dr. Fernando Rocha', funcao: 'Perito Contábil', registro: 'CFC 321.654', avatar: 'FR', cor: '#D4AF37', tipo: 'perito' },
+        { id: 6, nome: 'Dra. Juliana Ferreira', funcao: 'Advogada', registro: 'OAB/SP 234.567', avatar: 'JF', cor: '#0A0A0A', tipo: 'advogado' },
+        { id: 7, nome: 'Dr. Marcos Antônio', funcao: 'Mediador', registro: 'CNJ Cert. 654', avatar: 'MA', cor: '#D4AF37', tipo: 'mediador' },
+        { id: 8, nome: 'Sra. Camila Oliveira', funcao: 'Parte Autora', registro: 'CPF ***.456.789-**', avatar: 'CO', cor: '#0A0A0A', tipo: 'parte' },
+    ];
+
+    const horariosOcupados = ['09:00', '10:30', '14:00', '15:30'];
+
+    let participantesSelecionados = [];
+    let salaSelecionada = null;
+
+    window.nova_audiencia_carregarHorarios = function() {
+        const dataInput = document.getElementById('aud-data');
+        const grid = document.getElementById('aud-horarios-grid');
+        if (!dataInput.value) {
+            grid.innerHTML = '<p class="col-span-3 text-xs text-gray-400 text-center py-4">Selecione uma data para ver horários</p>';
+            return;
+        }
+
+        const todosHorarios = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
+
+        let html = '';
+        todosHorarios.forEach(h => {
+            const ocupado = horariosOcupados.includes(h);
+            html += `<button type="button" onclick="nova_audiencia_selecionarHorario(this,'${h}')" ${ocupado ? 'disabled' : ''} class="py-2.5 rounded-xl text-xs font-medium transition-all ${ocupado ? 'bg-gray-100 text-gray-300 cursor-not-allowed line-through' : 'bg-white border border-gray-200 text-gray-700 hover:border-[#D4AF37] hover:text-[#D4AF37] active:scale-95'}">${h}</button>`;
+        });
+        grid.innerHTML = html;
+    };
+
+    window.nova_audiencia_selecionarHorario = function(btn, hora) {
+        document.querySelectorAll('#aud-horarios-grid button:not([disabled])').forEach(b => {
+            b.classList.remove('bg-[#D4AF37]', 'text-white', 'border-[#D4AF37]');
+            b.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
+        });
+        btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
+        btn.classList.add('bg-[#D4AF37]', 'text-white', 'border-[#D4AF37]');
+    };
+
+    window.nova_audiencia_tipoSala = function(tipo) {
+        const fisicaBtn = document.getElementById('btn-tipo-sala-fisica');
+        const virtualBtn = document.getElementById('btn-tipo-sala-virtual');
+        const fisicaContent = document.getElementById('aud-sala-fisica-content');
+        const virtualContent = document.getElementById('aud-sala-virtual-content');
+
+        if (tipo === 'fisica') {
+            fisicaBtn.className = 'flex-1 py-2.5 rounded-xl text-xs font-semibold transition-all bg-[#0A0A0A] text-white';
+            virtualBtn.className = 'flex-1 py-2.5 rounded-xl text-xs font-semibold transition-all bg-gray-100 text-gray-600 hover:bg-gray-200';
+            fisicaContent.classList.remove('hidden');
+            virtualContent.classList.add('hidden');
+        } else {
+            virtualBtn.className = 'flex-1 py-2.5 rounded-xl text-xs font-semibold transition-all bg-[#0A0A0A] text-white';
+            fisicaBtn.className = 'flex-1 py-2.5 rounded-xl text-xs font-semibold transition-all bg-gray-100 text-gray-600 hover:bg-gray-200';
+            virtualContent.classList.remove('hidden');
+            fisicaContent.classList.add('hidden');
+            nova_audiencia_gerarLink();
+        }
+    };
+
+    window.nova_audiencia_gerarLink = function() {
+        const linkDiv = document.getElementById('aud-link-gerado');
+        const linkText = document.getElementById('aud-link-text');
+        if (linkDiv.classList.contains('hidden')) {
+            linkDiv.classList.remove('hidden');
+            linkText.textContent = 'https://bluecircuit-arbitragem.vercel.app/audiencia/' + Math.random().toString(36).substring(2, 10).toUpperCase();
+        }
+    };
+
+    window.nova_audiencia_carregarProcesso = function(valor) {
+        const infoDiv = document.getElementById('aud-processo-info');
+        const nomeEl = document.getElementById('aud-processo-nome');
+        const partesEl = document.getElementById('aud-processo-partes');
+        const processos = {
+            '001/2024': { nome: 'Silva Ltda x TechCorp S.A.', partes: 'Autor: Silva Ltda — Réu: TechCorp S.A.' },
+            '002/2024': { nome: 'Oliveira x Oliveira', partes: 'Partes: João Oliveira e Maria Oliveira' },
+            '003/2024': { nome: 'Mendes x Empresa XYZ', partes: 'Autor: Carlos Mendes — Réu: XYZ Logística' },
+            '004/2024': { nome: 'Santos x Supermercado Bom Preço', partes: 'Consumidor: Ana Santos — Fornecedor: Bom Preço' },
+            '005/2024': { nome: 'Costa Incorporadora x Construtora ABC', partes: 'Autor: Costa Incorporadora — Réu: ABC Constr.' },
+        };
+        if (valor && processos[valor]) {
+            nomeEl.textContent = processos[valor].nome;
+            partesEl.textContent = processos[valor].partes;
+            infoDiv.classList.remove('hidden');
+        } else {
+            infoDiv.classList.add('hidden');
+        }
+    };
+
+    window.nova_audiencia_buscarParticipantes = function(termo) {
+        const container = document.getElementById('aud-participantes-lista');
+        termo = termo.toLowerCase().trim();
+
+        const filtrados = participantesDisponiveis.filter(p =>
+            !termo || p.nome.toLowerCase().includes(termo) || p.funcao.toLowerCase().includes(termo) || p.registro.toLowerCase().includes(termo)
+        );
+
+        if (filtrados.length === 0) {
+            container.innerHTML = '<p class="col-span-1 text-xs text-gray-400 text-center py-4">Nenhum participante encontrado</p>';
+            return;
+        }
+
+        container.innerHTML = filtrados.map(p => {
+            const selecionado = participantesSelecionados.some(s => s.id === p.id);
+            const tipoBadge = { advogado: 'Advogado', juiz: 'Juiz', arbitro: 'Árbitro', conciliador: 'Conciliador', perito: 'Perito', mediador: 'Mediador', parte: 'Parte' }[p.tipo] || p.tipo;
+            return `<div onclick="nova_audiencia_toggleParticipante(${p.id})" class="flex items-center gap-3 p-3 bg-white border ${selecionado ? 'border-[#D4AF37] bg-[#D4AF37]/5' : 'border-gray-200'} rounded-xl cursor-pointer hover:border-[#D4AF37]/50 transition-all active:scale-[0.98]">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:${p.cor === '#D4AF37' ? 'rgba(212,175,55,0.15)' : 'rgba(10,10,10,0.08)'}">
+                    <span class="font-bold text-xs" style="color:${p.cor}">${p.avatar}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-[#0A0A0A] truncate">${p.nome}</p>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-gray-500">${p.funcao}</span>
+                        <span class="text-xs text-gray-300">|</span>
+                        <span class="text-xs text-gray-400">${p.registro}</span>
+                    </div>
+                </div>
+                <div class="w-6 h-6 rounded-full border-2 ${selecionado ? 'bg-[#D4AF37] border-[#D4AF37]' : 'border-gray-300'} flex items-center justify-center flex-shrink-0 transition-all">
+                    ${selecionado ? svgIconCheck : ''}
+                </div>
+            </div>`;
+        }).join('');
+    };
+
+    window.nova_audiencia_toggleParticipante = function(id) {
+        const idx = participantesSelecionados.findIndex(s => s.id === id);
+        if (idx >= 0) {
+            participantesSelecionados.splice(idx, 1);
+        } else {
+            const p = participantesDisponiveis.find(p => p.id === id);
+            if (p) participantesSelecionados.push(p);
+        }
+        const buscaInput = document.getElementById('aud-busca-participante');
+        nova_audiencia_buscarParticipantes(buscaInput.value);
+        nova_audiencia_atualizarSelecionados();
+    };
+
+    function nova_audiencia_atualizarSelecionados() {
+        const container = document.getElementById('aud-selecionados');
+        const list = document.getElementById('aud-selecionados-list');
+        if (participantesSelecionados.length === 0) {
+            container.classList.add('hidden');
+            return;
+        }
+        container.classList.remove('hidden');
+        list.innerHTML = participantesSelecionados.map(p =>
+            `<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[#D4AF37]/10 text-[#0A0A0A]">
+                <span class="w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold" style="background:${p.cor === '#D4AF37' ? 'rgba(212,175,55,0.25)' : 'rgba(10,10,10,0.1)'};color:${p.cor}">${p.avatar}</span>
+                ${p.nome.split(' ').slice(-1)[0]}
+                <button type="button" onclick="nova_audiencia_toggleParticipante(${p.id})" class="w-4 h-4 rounded-full hover:bg-[#D4AF37]/30 flex items-center justify-center transition-colors ml-0.5">
+                    <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </span>`
+        ).join('');
+    }
+
+    window.nova_audiencia_enviar = function(e) {
+        e.preventDefault();
+        const processo = document.getElementById('aud-processo').value;
+        const data = document.getElementById('aud-data').value;
+        const objetivo = document.getElementById('aud-objetivo').value;
+
+        if (!processo) { toast('Selecione um processo', 'erro'); return; }
+        if (!data) { toast('Selecione a data da audiência', 'erro'); return; }
+        if (participantesSelecionados.length === 0) { toast('Adicione pelo menos um participante', 'erro'); return; }
+
+        toast('Audiência agendada com sucesso!', 'ok');
+        setTimeout(() => mostrarTela('agenda-e-audiencias'), 800);
+    };
+
+    window.nova_audiencia_carregarSalas = function() {
+        const container = document.getElementById('aud-salas-lista');
+        container.innerHTML = salasFisicas.map(s => {
+            const selected = salaSelecionada === s.id;
+            return `<div onclick="nova_audiencia_selecionarSala(${s.id})" class="p-3 border ${selected ? 'border-[#D4AF37] bg-[#D4AF37]/5' : 'border-gray-200 bg-white'} rounded-xl cursor-pointer hover:border-[#D4AF37]/50 transition-all active:scale-[0.98]">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-[#0A0A0A]">${s.nome}</p>
+                        <p class="text-xs text-gray-500 mt-0.5">${s.piso} • Capacidade: ${s.capacidade} pessoas</p>
+                        <div class="flex flex-wrap gap-1 mt-2">
+                            ${s.recursos.map(r => `<span class="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-500 rounded-full">${r}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="w-5 h-5 rounded-full border-2 ${selected ? 'bg-[#D4AF37] border-[#D4AF37]' : 'border-gray-300'} flex items-center justify-center flex-shrink-0 transition-all mt-0.5">
+                        ${selected ? svgIconCheck : ''}
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+    };
+
+    window.nova_audiencia_selecionarSala = function(id) {
+        salaSelecionada = id;
+        nova_audiencia_carregarSalas();
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        nova_audiencia_carregarSalas();
+        nova_audiencia_buscarParticipantes('');
+
+        document.querySelectorAll('.tipo-audiencia-option input').forEach(input => {
+            input.addEventListener('change', function() {
+                document.querySelectorAll('.tipo-audiencia-option > div').forEach(div => {
+                    div.classList.remove('border-[#D4AF37]', 'bg-[#D4AF37]/5');
+                    div.classList.add('border-gray-200');
+                    const icon = div.querySelector('svg');
+                    if (icon) { icon.classList.remove('text-[#D4AF37]'); icon.classList.add('text-gray-400'); }
+                    const span = div.querySelector('span');
+                    if (span) { span.classList.remove('text-[#D4AF37]'); span.classList.add('text-gray-600'); }
+                });
+                const parent = this.parentElement;
+                parent.querySelector('div').classList.remove('border-gray-200');
+                parent.querySelector('div').classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/5');
+                const icon = parent.querySelector('svg');
+                if (icon) { icon.classList.remove('text-gray-400'); icon.classList.add('text-[#D4AF37]'); }
+                const span = parent.querySelector('span');
+                if (span) { span.classList.remove('text-gray-600'); span.classList.add('text-[#D4AF37]'); }
+            });
+        });
+
+        document.querySelectorAll('.duracao-option input').forEach(input => {
+            input.addEventListener('change', function() {
+                document.querySelectorAll('.duracao-option > div').forEach(div => {
+                    div.classList.remove('border-[#D4AF37]', 'bg-[#D4AF37]/5');
+                    div.classList.add('border-gray-200');
+                    const span = div.querySelector('span');
+                    if (span) { span.classList.remove('text-[#D4AF37]'); span.classList.add('text-gray-600'); }
+                });
+                const parent = this.parentElement;
+                parent.querySelector('div').classList.remove('border-gray-200');
+                parent.querySelector('div').classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/5');
+                const span = parent.querySelector('span');
+                if (span) { span.classList.remove('text-gray-600'); span.classList.add('text-[#D4AF37]'); }
+                document.getElementById('duracao-custom-container').classList.toggle('hidden', this.value !== 'custom');
+            });
+        });
+
+        document.getElementById('aud-data').min = new Date().toISOString().split('T')[0];
+    });
+})();
+</script>
+
     <!-- TELAS -->
     </main>
 
